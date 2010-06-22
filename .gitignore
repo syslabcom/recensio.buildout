@@ -11,3 +11,4 @@ parts/
 src/
 var/
 secret.cfg
+buildout.cfg
