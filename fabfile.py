@@ -7,47 +7,54 @@ config.read('secret.cfg')
 env.profiles = []
 
 def refresh():
+    """ Only update profiles """
     webpass = config.get('instance-settings', 'user').split(':')[1]
     with cd(env.path):
         run(env.serverurl % \
             (env.webuser, webpass, ' '.join(env.profiles)))
 
 def createSite():
+    """ Create a new recensio site. Does not delete old one! """
+    _update()
+    _build()
     webpass = config.get('instance-settings', 'user').split(':')[1]
     with cd(env.path):
         run(env.create_page_command % \
             (env.webuser, webpass))
+    _refresh()
 
 def deleteEverythingAndRebuild():
+    """ Deletes you checkout and rebuilds it. DANGEROUS"""
     with cd(env.path):
-        run('rm -rf .')
-        run('svn up')
-    build()
-    full_update()
+        run('./bin/supervisorctl shutdown || echo Ignoring Error')
+        run('rm -rf parts var')
+    createSite()
 
-def build():
+def _build():
     with cd(env.path):
-        run('./bin/supervisord || echo Ignoring Error')
-        run('./bin/supervisorctl stop solr')
+        run('./bin/supervisorctl shutdown || echo Ignoring Error')
         run('./bin/buildout -c ' + env.buildoutcfg)
-        run('./bin/supervisorctl start solr')
+        run('./bin/supervisord || echo Ignoring Error')
+    run('sleep 20')
 
-def update():
+def full_update():
+    """ A full update """
+    _update()
+    _build()
+    refresh()
+
+def _update()
     with cd(env.path):
         run('./bin/supervisord || echo Ignoring Error')
         run('svn up')
         run('./bin/develop update -f')
-        run('./bin/supervisorctl stop all || echo Ignoring Error')
-    build()
-    with cd(env.path):
-        run('./bin/supervisorctl start all')
-        run('sleep 20')
-    refresh()
 
 def withDemoContent():
+    """ The next steps will also add example data """
     env.profiles = ['example-data']
 
 def local():
+    """ Work on local environment """
     env.hosts = [config.get('local', 'host')]
     env.webuser = 'admin'
     env.path = config.get('local', 'path')
@@ -56,15 +63,16 @@ def local():
     env.buildoutcfg = 'buildout.cfg'
 
 def test():
-    1/0
+    """ Work on test environment """
     env.hosts = ['zope@ext4.syslab.com']
     env.webuser = 'admin'
     env.path = '/home/zope/recensio'
     env.serverurl = './bin/reset http://recensio.syslab.com %s %s %s'
-    env.create_page_command = './bin/createSite https://recensio.syslab.com %s %s'
-    env.buildoutcfg = 'test.cfg'
+    env.create_page_command = './bin/createSite http://recensio.syslab.com:8012 %s %s'
+    env.buildoutcfg = 'buildout.cfg'
 
 def production():
+    """ Work on production environment """
     env.hosts = ['guest@localhost']
     env.webuser = 'admin'
     env.path = '/home/guest/denso-esc'
