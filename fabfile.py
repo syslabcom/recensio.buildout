@@ -45,7 +45,6 @@ def full_update():
 
 def _update():
     with cd(env.path):
-        run('./bin/supervisord || echo Ignoring Error')
         run('svn up')
         run('./bin/develop update -f')
 
