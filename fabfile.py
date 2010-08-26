@@ -6,7 +6,7 @@ config = ConfigParser()
 config.read('secret.cfg')
 env.profiles = []
 
-def refresh():
+def reloadProfilesAndResetCatalog():
     """ Only update profiles """
     webpass = config.get('instance-settings', 'user').split(':')[1]
     with cd(env.path):
@@ -21,7 +21,7 @@ def createSite():
     with cd(env.path):
         run(env.create_page_command % \
             (env.webuser, webpass))
-    _refresh()
+    reloadProfilesAndResetCatalog()
 
 def deleteEverythingAndRebuild():
     """ Deletes you checkout and rebuilds it. DANGEROUS"""
@@ -43,7 +43,7 @@ def full_update():
     _build()
     refresh()
 
-def _update()
+def _update():
     with cd(env.path):
         run('./bin/supervisord || echo Ignoring Error')
         run('svn up')
@@ -51,7 +51,7 @@ def _update()
 
 def withDemoContent():
     """ The next steps will also add example data """
-    env.profiles = ['example-data']
+    env.profiles = ['profile-recensio.contenttypes:example_content']
 
 def local():
     """ Work on local environment """
