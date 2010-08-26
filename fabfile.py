@@ -62,6 +62,15 @@ def local():
     env.create_page_command = './bin/createSite http://127.0.0.1:8010 %s %s'
     env.buildoutcfg = 'buildout.cfg'
 
+def tina():
+    """ Update recensio on Tina """
+    env.hosts = ['pecek@tinalaptop']
+    env.webuser = 'admin'
+    env.path = '?'
+    env.serverurl = './bin/reset http://tinalaptop:8010 %s %s %s'
+    env.create_page_command = './bin/createSite http://tinalaptop:8012 %s %s'
+    env.buildoutcfg = 'buildout.cfg'
+
 def test():
     """ Work on test environment """
     env.hosts = ['zope@ext4.syslab.com']
