@@ -41,7 +41,7 @@ def full_update():
     """ A full update """
     _update()
     _build()
-    refresh()
+    reloadProfilesAndResetCatalog()
 
 def _update():
     with cd(env.path):
