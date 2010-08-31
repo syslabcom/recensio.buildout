@@ -15,7 +15,7 @@ def reloadProfilesAndResetCatalog():
 
 def createSite():
     """ Create a new recensio site. Does not delete old one! """
-    _update()
+    update()
     _build()
     webpass = config.get('instance-settings', 'user').split(':')[1]
     with cd(env.path):
@@ -39,11 +39,12 @@ def _build():
 
 def full_update():
     """ A full update """
-    _update()
+    update()
     _build()
     reloadProfilesAndResetCatalog()
 
-def _update():
+def update():
+    """ Update svn and development eggs """
     with cd(env.path):
         run('svn up')
         run('./bin/develop update -f')
