@@ -1,6 +1,6 @@
 #!/bin/bash
 
-${buildout:directory}/bin/solr-instance start
+${buildout:directory}/bin/solr-test-instance start
 ${buildout:directory}/bin/test_dontcall $*
 status=$?
 ${buildout:directory}/bin/solr-instance stop
