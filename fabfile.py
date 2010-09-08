@@ -51,7 +51,9 @@ def update():
 
 def withDemoContent():
     """ The next steps will also add example data """
-    env.profiles = ['profile-recensio.contenttypes:example_content']
+    if not env.profiles:
+        env.profiles = []
+    env.profiles.append('profile-recensio.contenttypes:example_content')
 
 def local():
     """ Work on local environment """
@@ -62,15 +64,6 @@ def local():
     env.create_page_command = './bin/createSite http://127.0.0.1:8010 %s %s'
     env.buildoutcfg = 'buildout.cfg'
 
-def tina():
-    """ Update recensio on Tina """
-    env.hosts = ['pecek@tinalaptop']
-    env.webuser = 'admin'
-    env.path = '?'
-    env.serverurl = './bin/reset http://tinalaptop:8010 %s %s %s'
-    env.create_page_command = './bin/createSite http://tinalaptop:8012 %s %s'
-    env.buildoutcfg = 'buildout.cfg'
-
 def test():
     """ Work on test environment """
     env.hosts = ['zope@ext4.syslab.com']
@@ -78,7 +71,19 @@ def test():
     env.path = '/home/zope/recensio'
     env.serverurl = './bin/reset http://recensio.syslab.com %s %s %s'
     env.create_page_command = './bin/createSite http://recensio.syslab.com:8012 %s %s'
-    env.buildoutcfg = 'buildout.cfg'
+    env.buildoutcfg = 'test-env.cfg'
+
+def demo():
+    """ Work on test environment """
+    if not env.profiles:
+        env.profiles = []
+    env.profiles.append('profile.recensio.policy:demo')
+    env.hosts = ['zope@ext4.syslab.com']
+    env.webuser = 'admin'
+    env.path = '/home/zope/recensio_demo'
+    env.serverurl = './bin/reset http://recensio.syslab.com %s %s %s'
+    env.create_page_command = './bin/createSite http://recensio.syslab.com:8013 %s %s'
+    env.buildoutcfg = 'demo-env.cfg'
 
 def production():
     """ Work on production environment """
