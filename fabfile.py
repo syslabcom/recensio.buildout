@@ -75,14 +75,11 @@ def test():
 
 def demo():
     """ Work on test environment """
-    if not env.profiles:
-        env.profiles = []
-    env.profiles.append('profile.recensio.policy:demo')
     env.hosts = ['zope@ext4.syslab.com']
     env.webuser = 'admin'
     env.path = '/home/zope/recensio_demo'
-    env.serverurl = './bin/reset http://recensio.syslab.com %s %s %s'
-    env.create_page_command = './bin/createSite http://recensio.syslab.com:8013 %s %s'
+    env.serverurl = './bin/reset http://recensio.syslab.com:8013/recensio %s %s %s'
+    env.create_page_command = './bin/createSite http://recensio.syslab.com:8013 %s %s recensio.policy:demo'
     env.buildoutcfg = 'demo-env.cfg'
 
 def production():
