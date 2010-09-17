@@ -1,0 +1,7 @@
+#!/bin/bash
+
+${buildout:directory}/bin/solr-test-instance start
+${buildout:directory}/bin/testxml_dontcall $*
+status=$?
+${buildout:directory}/bin/solr-instance stop
+exit $status
