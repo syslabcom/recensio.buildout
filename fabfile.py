@@ -58,9 +58,10 @@ def withDemoContent():
 def local():
     """ Work on local environment """
     env.hosts = [config.get('local', 'host')]
+    env.port = config.get("local", "port")
     env.webuser = 'admin'
     env.path = config.get('local', 'path')
-    env.serverurl = './bin/reset http://127.0.0.1:8010/recensio %s %s %s'
+    env.serverurl = './bin/recensio-policy-reset http://127.0.0.1:8010/recensio %s %s %s'
     env.create_page_command = './bin/createSite http://127.0.0.1:8010 %s %s'
     env.buildoutcfg = 'buildout.cfg'
 
@@ -69,7 +70,7 @@ def test():
     env.hosts = ['zope@ext4.syslab.com']
     env.webuser = 'admin'
     env.path = '/home/zope/recensio'
-    env.serverurl = './bin/reset http://recensio.syslab.com %s %s %s'
+    env.serverurl = './bin/recensio-policy-reset http://recensio.syslab.com %s %s %s'
     env.create_page_command = './bin/createSite http://recensio.syslab.com:8012 %s %s'
     env.buildoutcfg = 'test-env.cfg'
 
@@ -78,7 +79,7 @@ def demo():
     env.hosts = ['zope@ext4.syslab.com']
     env.webuser = 'admin'
     env.path = '/home/zope/recensio_demo'
-    env.serverurl = './bin/reset http://recensio.syslab.com:8013/recensio %s %s %s'
+    env.serverurl = './bin/recensio-policy-reset http://recensio.syslab.com:8013/recensio %s %s %s'
     env.create_page_command = './bin/createSite http://recensio.syslab.com:8013 %s %s recensio.policy:demo'
     env.buildoutcfg = 'demo-env.cfg'
 
@@ -87,5 +88,5 @@ def production():
     env.hosts = ['guest@localhost']
     env.webuser = 'admin'
     env.path = '/home/guest/denso-esc'
-    env.serverurl = 'http_proxy=;./bin/reset http://127.0.0.1:8082/denso-esc %s %s %s'
+    env.serverurl = 'http_proxy=;./bin/recensio-policy-reset http://127.0.0.1:8082/denso-esc %s %s %s'
     env.buildoutcfg = 'production.cfg'
