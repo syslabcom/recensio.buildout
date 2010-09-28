@@ -58,7 +58,6 @@ def withDemoContent():
 def local():
     """ Work on local environment """
     env.hosts = [config.get('local', 'host')]
-    env.port = config.get("local", "port")
     env.webuser = 'admin'
     env.path = config.get('local', 'path')
     env.serverurl = './bin/recensio-policy-reset http://127.0.0.1:8010/recensio %s %s %s'
