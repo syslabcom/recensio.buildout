@@ -38,7 +38,7 @@ def _build():
         sudo('./bin/supervisorctl shutdown || echo Ignoring Error',
              user = env.sudouser)
         sudo('./bin/buildout -c ' + env.buildoutcfg, user = env.sudouser)
-        sudo('./bin/supervisord || echo Ignoring Error' user = env.sudouser)
+        sudo('./bin/supervisord || echo Ignoring Error', user = env.sudouser)
     sudo('sleep 20', user = env.sudouser)
 
 def full_update():
