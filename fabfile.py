@@ -98,11 +98,3 @@ def demo():
     env.serverurl = './bin/recensio-policy-reset http://recensio.syslab.com:8013/recensio %s %s %s'
     env.create_page_command = './bin/createSite http://recensio.syslab.com:8013 %s %s recensio.policy:demo'
     env.buildoutcfg = 'demo-env.cfg'
-
-def production():
-    """ Work on production environment """
-    env.hosts = ['guest@localhost']
-    env.webuser = 'admin'
-    env.path = '/home/guest/denso-esc'
-    env.serverurl = 'http_proxy=;./bin/recensio-policy-reset http://127.0.0.1:8082/denso-esc %s %s %s'
-    env.buildoutcfg = 'production.cfg'
