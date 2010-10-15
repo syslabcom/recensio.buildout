@@ -85,8 +85,8 @@ def production():
     env.webuser = 'admin'
     env.sudouser = 'recensio'
     env.path = '/home/recensio/recensio'
-    env.serverurl = './bin/recensio-policy-reset http://recensio00.gocept.net:8080/recensio %s %s'
-    env.create_page_command = './bin/createSite http://recensio00.gocept.net:8080 %s %s'
+    env.serverurl = './bin/recensio-policy-reset http://localhost:8080/recensio %s %s'
+    env.create_page_command = './bin/createSite http://localhost:8080 %s %s'
     env.buildoutcfg = 'production-env.cfg'
 
 def demo():
