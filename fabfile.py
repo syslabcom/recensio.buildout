@@ -8,20 +8,18 @@ env.profiles = []
 
 def reloadProfilesAndResetCatalog():
     """ Only update profiles """
-    webpass = config.get('instance-settings', 'user').split(':')[1]
     with cd(env.path):
         sudo(env.serverurl % \
-            (env.webuser, webpass, ' '.join(env.profiles)),
+            (env.webuser, env.webpass, ' '.join(env.profiles)),
             user = env.sudouser)
 
 def createSite():
     """ Create a new recensio site. Does not delete old one! """
     update()
     _build()
-    webpass = config.get('instance-settings', 'user').split(':')[1]
     with cd(env.path):
         sudo(env.create_page_command % \
-            (env.webuser, webpass),
+            (env.webuser, env.webpass),
             user = env.sudouser)
     reloadProfilesAndResetCatalog()
 
@@ -63,6 +61,7 @@ def local():
     """ Work on local environment """
     env.hosts = [config.get('local', 'host')]
     env.webuser = 'admin'
+    env.webpass = config.get('instance-settings', 'user').split(':')[1]
     env.sudouser = config.get('local', 'sudouser')
     env.path = config.get('local', 'path')
     env.serverurl = './bin/recensio-policy-reset http://127.0.0.1:8010/recensio %s %s %s'
@@ -73,6 +72,7 @@ def test():
     """ Work on test environment """
     env.hosts = ['zope@ext4.syslab.com']
     env.webuser = 'admin'
+    env.webpass = config.get('instance-settings', 'user').split(':')[1]
     env.sudouser = 'zope'
     env.path = '/home/zope/recensio'
     env.serverurl = './bin/recensio-policy-reset http://recensio.syslab.com %s %s %s'
@@ -83,9 +83,10 @@ def production():
     """ Work on production environment """
     env.hosts = ['%s@recensio00.gocept.net' % config.get('production', 'user')]
     env.webuser = 'admin'
+    env.webpass = config.get('production', 'web_password')
     env.sudouser = 'recensio'
     env.path = '/home/recensio/recensio'
-    env.serverurl = './bin/recensio-policy-reset http://localhost:8080/recensio %s %s'
+    env.serverurl = './bin/recensio-policy-reset http://localhost:8080/recensio %s %s %s'
     env.create_page_command = './bin/createSite http://localhost:8080 %s %s'
     env.buildoutcfg = 'production-env.cfg'
 
