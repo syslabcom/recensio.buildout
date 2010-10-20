@@ -9,35 +9,31 @@ env.profiles = []
 def reloadProfilesAndResetCatalog():
     """ Only update profiles """
     with cd(env.path):
-        sudo(env.serverurl % \
-            (env.webuser, env.webpass, ' '.join(env.profiles)),
-            user = env.sudouser)
+        env.execute(env.serverurl % \
+            (env.webuser, env.webpass, ' '.join(env.profiles)))
 
 def createSite():
     """ Create a new recensio site. Does not delete old one! """
     update()
     _build()
     with cd(env.path):
-        sudo(env.create_page_command % \
-            (env.webuser, env.webpass),
-            user = env.sudouser)
+        env.execute(env.create_page_command % \
+            (env.webuser, env.webpass))
     reloadProfilesAndResetCatalog()
 
 def deleteEverythingAndRebuild():
     """ Deletes you checkout and rebuilds it. DANGEROUS"""
     with cd(env.path):
-        sudo('./bin/supervisorctl shutdown || echo Ignoring Error',
-             user = env.sudouser)
-        sudo('rm -rf parts var', user = env.sudouser)
+        env.execute('./bin/supervisorctl shutdown || echo Ignoring Error')
+        env.execute('rm -rf parts var')
     createSite()
 
 def _build():
     with cd(env.path):
-        sudo('./bin/supervisorctl shutdown || echo Ignoring Error',
-             user = env.sudouser)
-        sudo('./bin/buildout -c ' + env.buildoutcfg, user = env.sudouser)
-        sudo('./bin/supervisord || echo Ignoring Error', user = env.sudouser)
-    sudo('sleep 20', user = env.sudouser)
+        env.execute('./bin/supervisorctl shutdown || echo Ignoring Error')
+        env.execute('./bin/buildout -c ' + env.buildoutcfg)
+        env.execute('./bin/supervisord || echo Ignoring Error')
+    env.execute('sleep 20')
 
 def full_update():
     """ A full update """
@@ -48,8 +44,8 @@ def full_update():
 def update():
     """ Update svn and development eggs """
     with cd(env.path):
-        sudo('svn up', user = env.sudouser)
-        sudo('./bin/develop update -f', user = env.sudouser)
+        env.execute('svn up')
+        env.execute('./bin/develop update -f')
 
 def withDemoContent():
     """ The next steps will also add example data """
@@ -63,6 +59,7 @@ def local():
     env.webuser = 'admin'
     env.webpass = config.get('instance-settings', 'user').split(':')[1]
     env.sudouser = config.get('local', 'sudouser')
+    env.execute = lambda cmd: run(cmd)
     env.path = config.get('local', 'path')
     env.serverurl = './bin/recensio-policy-reset http://127.0.0.1:8010/recensio %s %s %s'
     env.create_page_command = './bin/createSite http://127.0.0.1:8010 %s %s'
@@ -74,6 +71,7 @@ def test():
     env.webuser = 'admin'
     env.webpass = config.get('instance-settings', 'user').split(':')[1]
     env.sudouser = 'zope'
+    env.execute = lambda cmd: run(cmd)
     env.path = '/home/zope/recensio'
     env.serverurl = './bin/recensio-policy-reset http://recensio.syslab.com %s %s %s'
     env.create_page_command = './bin/createSite http://recensio.syslab.com:8012 %s %s'
@@ -85,6 +83,7 @@ def production():
     env.webuser = 'admin'
     env.webpass = config.get('production', 'web_password')
     env.sudouser = 'recensio'
+    env.execute = lambda cmd: env.execute(cmd, user = env.sudouser)
     env.path = '/home/recensio/recensio'
     env.serverurl = './bin/recensio-policy-reset http://localhost:8080/recensio %s %s %s'
     env.create_page_command = './bin/createSite http://localhost:8080 %s %s'
@@ -95,6 +94,7 @@ def demo():
     env.hosts = ['zope@ext4.syslab.com']
     env.webuser = 'admin'
     env.sudouser = 'zope'
+    env.execute = lambda cmd: run(cmd)
     env.path = '/home/zope/recensio_demo'
     env.serverurl = './bin/recensio-policy-reset http://recensio.syslab.com:8013/recensio %s %s %s'
     env.create_page_command = './bin/createSite http://recensio.syslab.com:8013 %s %s recensio.policy:demo'
