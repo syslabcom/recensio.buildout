@@ -83,7 +83,7 @@ def production():
     env.webuser = 'admin'
     env.webpass = config.get('production', 'web_password')
     env.sudouser = 'recensio'
-    env.execute = lambda cmd: env.execute(cmd, user = env.sudouser)
+    env.execute = lambda cmd: sudo(cmd, user = env.sudouser)
     env.path = '/home/recensio/recensio'
     env.serverurl = './bin/recensio-policy-reset http://localhost:8080/recensio %s %s %s'
     env.create_page_command = './bin/createSite http://localhost:8080 %s %s'
