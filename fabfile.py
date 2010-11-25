@@ -6,6 +6,10 @@ config = ConfigParser()
 config.read('secret.cfg')
 env.profiles = []
 
+def get_option(config, option):
+    """ Return the value of a config option if it e
+    """
+
 def reloadProfilesAndResetCatalog():
     """ Only update profiles """
     with cd(env.path):
@@ -56,6 +60,8 @@ def withDemoContent():
 def local():
     """ Work on local environment """
     env.hosts = [config.get('local', 'host')]
+    if config.has_option('local', 'key_filename'):
+        env.key_filename = config.get('local', 'key_filename')
     env.webuser = 'admin'
     env.webpass = config.get('instance-settings', 'user').split(':')[1]
     env.sudouser = config.get('local', 'sudouser')
