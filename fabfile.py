@@ -45,6 +45,11 @@ def full_update():
     _build()
     reloadProfilesAndResetCatalog()
 
+def restart():
+    """ Restart instance """
+    with cd(env.path):
+        env.execute('bin/supervisorctl restart instance')
+
 def update():
     """ Update svn and development eggs """
     with cd(env.path):
