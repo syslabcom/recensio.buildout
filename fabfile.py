@@ -48,7 +48,7 @@ def full_update():
 def restart():
     """ Restart instance """
     with cd(env.path):
-        env.execute('bin/supervisorctl restart instance')
+        env.execute('bin/supervisorctl restart all')
 
 def update():
     """ Update svn and development eggs """
