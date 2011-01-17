@@ -7,7 +7,7 @@ levels = int(sys.argv[3])
 xls_file = xlrd.open_workbook(xls_filename)
 sheet = xls_file.sheets()[0]
 
-last_level = [{'key' : 'root', 'children': []}, {}, {}, {}]
+last_level = [{'key' : 'root', 'children': []}, {}, {}, {}, {}]
 
 xml_container = '''<?xml version="1.0" encoding="utf-8"?>
 <vdex xmlns="http://www.imsglobal.org/xsd/imsvdex_v1p0"
@@ -59,7 +59,11 @@ for rowid in range(start_row, sheet.nrows):
                 'english' : english,
                 'french' : french,
                 'children' : []}
-    last_level[level + 1] = new_data
+    try:
+        last_level[level + 1] = new_data
+    except:
+        import pdb;pdb.set_trace()
+        last_level[level + 1] = new_data
     last_level[level]['children'].append(new_data)
 
 def convert(item):
