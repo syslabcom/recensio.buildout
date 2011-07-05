@@ -3,7 +3,7 @@ from fabric.api import *
 from ConfigParser import ConfigParser
 
 config = ConfigParser()
-config.read('secret.cfg')
+config.read('buildout.cfg')
 env.profiles = []
 
 def get_option(config, option):
