@@ -1,4 +1,5 @@
 [buildout]
+extends = profiles/dev.cfg
 find-links +=
     http://XXX:XXX@sdist.zopyx.com
 site=http://localhost/recensio:8080
