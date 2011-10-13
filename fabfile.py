@@ -119,7 +119,7 @@ def beta():
     env.sudouser = 'recensio'
     env.execute = lambda cmd: sudo(cmd, user = env.sudouser)
     env.path = '/home/recensio/recensio-phase2'
-    env.serverurl = './bin/recensio-policy-reset http://localhost:8080/recensio %s %s %s'
-    env.create_page_command = './bin/createSite http://localhost:8080 %s %s'
+    env.serverurl = './bin/recensio-policy-reset http://localhost:8081/recensio %s %s %s'
+    env.create_page_command = './bin/createSite http://localhost:8081 %s %s'
     env.buildoutcfg = 'beta-env.cfg'
 
