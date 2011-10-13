@@ -110,3 +110,16 @@ def demo():
     env.serverurl = './bin/recensio-policy-reset http://recensio.syslab.com:8013/recensio %s %s %s'
     env.create_page_command = './bin/createSite http://recensio.syslab.com:8013 %s %s recensio.policy:demo'
     env.buildoutcfg = 'demo-env.cfg'
+
+def beta():
+    """ Work on beta environment """
+    env.hosts = ['%s@recensio00.gocept.net' % config.get('beta', 'user')]
+    env.webuser = 'admin'
+    env.webpass = config.get('beta', 'web_password')
+    env.sudouser = 'recensio'
+    env.execute = lambda cmd: sudo(cmd, user = env.sudouser)
+    env.path = '/home/recensio/recensio-phase2'
+    env.serverurl = './bin/recensio-policy-reset http://localhost:8080/recensio %s %s %s'
+    env.create_page_command = './bin/createSite http://localhost:8080 %s %s'
+    env.buildoutcfg = 'beta-env.cfg'
+
