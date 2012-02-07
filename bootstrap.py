@@ -47,6 +47,7 @@ if options.version is not None:
     VERSION = '==%s' % options.version
 else:
     VERSION = ''
+VERSION = '==1.5.2'
 
 # We decided to always use distribute, make sure this is the default for us
 # USE_DISTRIBUTE = options.distribute
@@ -115,7 +116,7 @@ else:
         ) == 0
 
 ws.add_entry(tmpeggs)
-ws.require('zc.buildout' + VERSION)
+ws.require('zc.buildout==1.5.2')
 import zc.buildout.buildout
 zc.buildout.buildout.main(args)
 shutil.rmtree(tmpeggs)
