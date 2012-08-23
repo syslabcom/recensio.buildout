@@ -13,3 +13,5 @@ var/
 secret.cfg
 buildout.cfg
 tmp_translations/
+.*.swp
+*.pyc
