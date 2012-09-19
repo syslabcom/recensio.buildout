@@ -30,7 +30,9 @@ class buildout {
                'subversion',
                'wget',
                'default-jdk',
-               'elinks',]:
+               'elinks',
+               'zlib1g-dev',
+               'libbz2-dev',]:
         ensure => installed,
         before => Exec["virtualenv"],
     }
@@ -70,30 +72,40 @@ class buildout {
     }
 
     # Get the unified installer and unpack the buildout-cache
-    exec {'wget http://launchpad.net/plone/4.0/4.0.3/+download/Plone-4.0.3-20110720-UnifiedInstaller.tgz':
-        alias => "unified_installer",
-        creates => '/home/vagrant/tmp/Plone-4.0.3-20110720-UnifiedInstaller.tgz',
+    exec {'wget https://launchpad.net/plone/4.2/4.2.1/+download/Plone-4.2.1-UnifiedInstaller.tgz':
+        creates => '/home/vagrant/tmp/Plone-4.2.1-UnifiedInstaller.tgz',
         cwd => '/home/vagrant/tmp',
+        before => Exec["untar1"],
     }
 
-    exec {'tar xzf Plone-4.0.3-20110720-UnifiedInstaller.tgz':
-        creates => '/home/vagrant/tmp/Plone-4.0.3-UnifiedInstaller',
+    exec {'tar xzf Plone-4.2.1-UnifiedInstaller.tgz':
+        alias => "untar1",
+        creates => '/home/vagrant/tmp/Plone-4.2.1-UnifiedInstaller',
         cwd => '/home/vagrant/tmp',
+        before => Exec["untar2"],
     }
 
     exec {'tar -C /home/vagrant/.buildout/ -xjf buildout-cache.tar.bz2':
-        creates => '/home/vagrant/.buildout/buildout-cache/eggs/Products.CMFPlone-4.0.3-py2.6.egg',
-        cwd => '/home/vagrant/tmp/Plone-4.0.3-UnifiedInstaller/packages/',
+        alias => "untar2",
+        creates => '/home/vagrant/.buildout/buildout-cache/eggs/Products.CMFPlone-4.2.1.1-py2.7.egg',
+        cwd => '/home/vagrant/tmp/Plone-4.2.1-UnifiedInstaller/packages/',
     }
 
-    exec {'virtualenv --no-site-packages py26':
+    exec {'wget https://raw.github.com/pypa/virtualenv/master/virtualenv.py':
+        alias => "get-virtualenv",
+        creates => '/home/vagrant/tmp/virtualenv.py',
+        cwd => '/home/vagrant/tmp',
+        before => Exec["virtualenv"],
+    }
+
+    exec {'python2.7 tmp/virtualenv.py --no-site-packages -p python2.7 py27':
         alias => "virtualenv",
-        creates => '/home/vagrant/py26',
+        creates => '/home/vagrant/py27',
         cwd => '/home/vagrant',
         before => Exec["bootstrap"],
     }
 
-    exec {'/home/vagrant/py26/bin/python bootstrap.py':
+    exec {'/home/vagrant/py27/bin/python bootstrap.py':
         alias => "bootstrap",
         creates => '/vagrant/bin/buildout',
         cwd => '/vagrant',
