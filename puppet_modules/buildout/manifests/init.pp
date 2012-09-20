@@ -32,7 +32,8 @@ class buildout {
                'default-jdk',
                'elinks',
                'zlib1g-dev',
-               'libbz2-dev',]:
+               'libbz2-dev',
+               'gettext',]:
         ensure => installed,
         before => Exec["virtualenv"],
     }
