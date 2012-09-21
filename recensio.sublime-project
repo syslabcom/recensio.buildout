@@ -1,0 +1,48 @@
+{
+    "folders":
+    [
+        {
+            "file_exclude_patterns":
+            [
+                ".*",
+                "*sublime-workspace"
+            ],
+            "folder_exclude_patterns":
+            [
+                "bin",
+                "develop-eggs",
+                "eggs",
+                "include",
+                "lib",
+                "local",
+                "var",
+                "puppet_modules",
+                "manifests",
+                "src",
+                "src-mrd",
+                "parts"
+            ],
+            "path": "."
+        },
+        {
+            "folder_exclude_patterns":
+            [
+                "recensio"
+            ],
+            "path": "parts/omelette"
+        },
+        {
+            "folder_exclude_patterns":
+            [
+                "*.egg-info",
+                "Paste-*",
+                "PasteDeploy-*",
+                "PasteScript-*"
+            ],
+            "path": "src"
+        },
+        {
+            "path": "src-mrd"
+        }
+    ]
+}
