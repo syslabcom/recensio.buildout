@@ -1,0 +1,69 @@
+TODO's for migration to 4.2
+
+- set versioning-policies through GS
+- RecensioLanguageSelector fixen
+- kommentare fixen
+- suche anpassen (auch erweiterete Suche, recensio.theme/recensio/theme/skins/recensio_theme/search.pt)
+- Reste von cdv rausnemhen (z.B. in skins)
+- schauen was mit collective.solr zu machen ist (update oder nicht?)
+
+Schritte zur Durchführung der Migration live
+
+Plone migrieren (BDPDebugMode raus und entweder blobs rein oder experimental.gracefulblobmissing drin haben) dauert ca 1h
+Alle dann noch verfügbaren upgrade-steps laufen lassen
+
+Produkte deinstalliern:
+xdv-theme deaktivieren in plone_control_panel
+XDV theme support (collective.xdv) deinstallieren
+
+Produkte reinstallieren:
+alle veralteten
+
+Recensio Theme reinstallieren migriert das design nach Diazo.
+Einstellung von "XDV theme support" auf "Diazo theme" übertragen?
+
+
+
+Fehler:
+Traceback (innermost last):
+  Module ZPublisher.Publish, line 126, in publish
+  Module ZPublisher.mapply, line 77, in mapply
+  Module ZPublisher.Publish, line 46, in call_object
+  Module recensio.theme.browser.topical, line 72, in __call__
+  Module collective.indexing.monkey, line 93, in searchResults
+  Module Products.LinguaPlone.patches, line 34, in searchResults
+  Module collective.solr.monkey, line 36, in searchResults
+  Module collective.solr.dispatcher, line 42, in __call__
+  Module collective.solr.dispatcher, line 90, in solrSearchResults
+   - __traceback_info__: ({'*': '*:*'}, {'facet': 'true', 'rows': 10, 'facet.field': ['languageReview'], 'start': 0}, {'Language': ['de', 'any'], 'portal_type': ['Presentation Online Resource', 'Presentation Article Review', 'Presentation Collection', 'Presentation Monograph', 'Review Journal', 'Review Monograph'], 'allowedRolesAndUsers': ['Manager', 'Authenticated', 'Anonymous', 'user$rescue'], 'Type': ('Presentation Monograph',)})
+  Module collective.solr.search, line 53, in search
+  Module collective.solr.solr, line 243, in search
+  Module collective.solr.solr, line 126, in doPost
+  Module collective.solr.solr, line 92, in __reconnect
+  Module httplib, line 757, in connect
+  Module socket, line 571, in create_connection
+error: [Errno 61] Connection refused
+
+Notizen:
+Buildout nicht im shared Folder einer VM halten, da das IOError gibt (vgl. https://www.virtualbox.org/ticket/9719):
+Traceback (innermost last):
+  Module ZPublisher.Publish, line 134, in publish
+  Module Zope2.App.startup, line 301, in commit
+  Module transaction._manager, line 89, in commit
+  Module transaction._transaction, line 329, in commit
+  Module transaction._transaction, line 446, in _commitResources
+  Module ZODB.Connection, line 781, in tpc_vote
+  Module ZEO.ClientStorage, line 1097, in tpc_vote
+  Module ZEO.ServerStub, line 249, in vote
+  Module ZEO.zrpc.connection, line 768, in call
+IOError: [Errno 71] Protocol error
+
+Evtl. auch installieren:
+lynx
+unrtf
+ppthtml
+xlhtml
+ps2ascii
+4xslt
+
+catalog clear und migrate dauert mit und ohne blobs ewig. Speedup?
