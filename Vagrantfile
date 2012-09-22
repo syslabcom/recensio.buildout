@@ -42,9 +42,10 @@ Vagrant::Config.run do |config|
   # an identifier, the second is the path on the guest to mount the
   # folder, and the third is the path on the host to the actual folder.
   # config.vm.share_folder "v-data", "/vagrant_data", "../data"
-  # config.vm.share_folder "src", "/src", "src"
+  config.vm.share_folder "src", "/home/bagrant/recensio/src", "src"
   # config.vm.share_folder "var", "/zopevar", "var"
   # config.vm.share_folder "eggs", "/home/vagrant/.buildout/buildout-cache/eggs", "eggs"
+
 
   # Enable provisioning with Puppet stand alone.  Puppet manifests
   # are contained in a directory path relative to this Vagrantfile.
