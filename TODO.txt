@@ -1,7 +1,7 @@
 TODO's for migration to 4.2
 
-- set versioning-policies through GS
-- RecensioLanguageSelector fixen
+- set versioning-policies through GS - DONE
+- RecensioLanguageSelector fixen - DONE
 - kommentare fixen
 - suche anpassen (auch erweiterete Suche, recensio.theme/recensio/theme/skins/recensio_theme/search.pt)
 - Reste von cdv rausnemhen (z.B. in skins)
