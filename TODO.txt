@@ -2,14 +2,16 @@ TODO's for migration to 4.2
 
 - set versioning-policies through GS - DONE
 - RecensioLanguageSelector fixen - DONE
-- kommentare fixen
-- suche anpassen (auch erweiterete Suche, recensio.theme/recensio/theme/skins/recensio_theme/search.pt)
-- Reste von cdv rausnemhen (z.B. in skins)
-- schauen was mit collective.solr zu machen ist (update oder nicht?)
+- kommentare fixen - TODO
+- suche anpassen (auch erweiterete Suche, recensio.theme/recensio/theme/skins/recensio_theme/search.pt) - TODO
+- Reste von cdv rausnemhen (z.B. in skins) - TODO
+- schauen was mit collective.solr zu machen ist (update oder nicht?) - TODO
 
 Schritte zur Durchführung der Migration live
 
-Plone migrieren (BDPDebugMode raus und entweder blobs rein oder experimental.gracefulblobmissing drin haben) dauert ca 1h
+Plone migrieren
+falls lokal: BDPDebugMode raus und entweder blobs rein oder experimental.gracefulblobmissing drin haben
+dauert ca 1h
 Alle dann noch verfügbaren upgrade-steps laufen lassen
 
 Produkte deinstalliern:
@@ -24,46 +26,82 @@ Einstellung von "XDV theme support" auf "Diazo theme" übertragen?
 
 
 
-Fehler:
-Traceback (innermost last):
-  Module ZPublisher.Publish, line 126, in publish
-  Module ZPublisher.mapply, line 77, in mapply
-  Module ZPublisher.Publish, line 46, in call_object
-  Module recensio.theme.browser.topical, line 72, in __call__
-  Module collective.indexing.monkey, line 93, in searchResults
-  Module Products.LinguaPlone.patches, line 34, in searchResults
-  Module collective.solr.monkey, line 36, in searchResults
-  Module collective.solr.dispatcher, line 42, in __call__
-  Module collective.solr.dispatcher, line 90, in solrSearchResults
-   - __traceback_info__: ({'*': '*:*'}, {'facet': 'true', 'rows': 10, 'facet.field': ['languageReview'], 'start': 0}, {'Language': ['de', 'any'], 'portal_type': ['Presentation Online Resource', 'Presentation Article Review', 'Presentation Collection', 'Presentation Monograph', 'Review Journal', 'Review Monograph'], 'allowedRolesAndUsers': ['Manager', 'Authenticated', 'Anonymous', 'user$rescue'], 'Type': ('Presentation Monograph',)})
-  Module collective.solr.search, line 53, in search
-  Module collective.solr.solr, line 243, in search
-  Module collective.solr.solr, line 126, in doPost
-  Module collective.solr.solr, line 92, in __reconnect
-  Module httplib, line 757, in connect
-  Module socket, line 571, in create_connection
-error: [Errno 61] Connection refused
 
 Notizen:
-Buildout nicht im shared Folder einer VM halten, da das IOError gibt (vgl. https://www.virtualbox.org/ticket/9719):
-Traceback (innermost last):
-  Module ZPublisher.Publish, line 134, in publish
-  Module Zope2.App.startup, line 301, in commit
-  Module transaction._manager, line 89, in commit
-  Module transaction._transaction, line 329, in commit
-  Module transaction._transaction, line 446, in _commitResources
-  Module ZODB.Connection, line 781, in tpc_vote
-  Module ZEO.ClientStorage, line 1097, in tpc_vote
-  Module ZEO.ServerStub, line 249, in vote
-  Module ZEO.zrpc.connection, line 768, in call
-IOError: [Errno 71] Protocol error
-
-Evtl. auch installieren:
-lynx
-unrtf
-ppthtml
-xlhtml
-ps2ascii
-4xslt
-
 catalog clear und migrate dauert mit und ohne blobs ewig. Speedup?
+sentry deaktivieren?
+
+Fehler beim upgrade:
+
+2012-10-30 16:56:07 INFO plone.app.upgrade Converting index `UID` to UUIDIndex.
+
+
+2012-10-30 16:56:08 ERROR sentry.errors Unable to reach Sentry log server: HTTP Error 403: FORBIDDEN (url: https://app.getsentry.com/api/store/, body: Creation of this event was blocked)
+Traceback (most recent call last):
+  File "/home/recensio/eggs/raven-2.0.6-py2.7.egg/raven/base.py", line 432, in send_remote
+    self._send_remote(url=url, data=data, headers=headers)
+  File "/home/recensio/eggs/raven-2.0.6-py2.7.egg/raven/base.py", line 406, in _send_remote
+    return transport.send(data, headers)
+  File "/home/recensio/eggs/raven-2.0.6-py2.7.egg/raven/transport/base.py", line 144, in send
+    response = urllib2.urlopen(req, data, self.timeout).read()
+  File "/usr/lib/python2.7/urllib2.py", line 126, in urlopen
+    return _opener.open(url, data, timeout)
+  File "/usr/lib/python2.7/urllib2.py", line 406, in open
+    response = meth(req, response)
+  File "/usr/lib/python2.7/urllib2.py", line 519, in http_response
+    'http', request, response, code, msg, hdrs)
+  File "/usr/lib/python2.7/urllib2.py", line 444, in error
+    return self._call_chain(*args)
+  File "/usr/lib/python2.7/urllib2.py", line 378, in _call_chain
+    result = func(*args)
+  File "/usr/lib/python2.7/urllib2.py", line 527, in http_error_default
+    raise HTTPError(req.get_full_url(), code, msg, hdrs, fp)
+HTTPError: HTTP Error 403: FORBIDDEN
+
+
+
+Traceback (most recent call last):
+  File "/home/recensio/eggs/Products.CMFPlone-4.2.2-py2.7.egg/Products/CMFPlone/MigrationTool.py", line 178, in upgrade
+    step['step'].doStep(setup)
+  File "/home/recensio/eggs/Products.GenericSetup-1.7.3-py2.7.egg/Products/GenericSetup/upgrade.py", line 140, in doStep
+    self.handler(tool)
+  File "/home/recensio/eggs/plone.app.upgrade-1.2.2-py2.7.egg/plone/app/upgrade/v41/alphas.py", line 278, in to41alpha3
+    optimize_indexes(context)
+  File "/home/recensio/eggs/plone.app.upgrade-1.2.2-py2.7.egg/plone/app/upgrade/v41/alphas.py", line 271, in optimize_indexes
+    convert_to_uuidindex(catalog, index)
+  File "/home/recensio/eggs/plone.app.upgrade-1.2.2-py2.7.egg/plone/app/upgrade/v41/alphas.py", line 216, in convert_to_uuidindex
+    'with multiple docids: %r' % (k, paths))
+ValueError: Inconsistent UID index, UID 512298481d7f251d65f07ba0877ada1b is associated with multiple docids: {('', 'recensio', 'Members', 'Hans_Mustermann', 'mustermonographie', '++conversation++default', '1294837415513892'): 1973786748, ('', 'recensio', 'Members', 'Hans_Mustermann', 'mustermonographie', '++conversation++default', '1294667619629594'): 1973786601}
+
+
+2012-10-30 16:56:07 ERROR plone.app.upgrade Upgrade aborted. Error:
+Traceback (most recent call last):
+  File "/home/recensio/eggs/Products.CMFPlone-4.2.2-py2.7.egg/Products/CMFPlone/MigrationTool.py", line 178, in upgrade
+    step['step'].doStep(setup)
+  File "/home/recensio/eggs/Products.GenericSetup-1.7.3-py2.7.egg/Products/GenericSetup/upgrade.py", line 140, in doStep
+    self.handler(tool)
+  File "/home/recensio/eggs/plone.app.upgrade-1.2.2-py2.7.egg/plone/app/upgrade/v41/alphas.py", line 278, in to41alpha3
+    optimize_indexes(context)
+  File "/home/recensio/eggs/plone.app.upgrade-1.2.2-py2.7.egg/plone/app/upgrade/v41/alphas.py", line 271, in optimize_indexes
+    convert_to_uuidindex(catalog, index)
+  File "/home/recensio/eggs/plone.app.upgrade-1.2.2-py2.7.egg/plone/app/upgrade/v41/alphas.py", line 216, in convert_to_uuidindex
+    'with multiple docids: %r' % (k, paths))
+ValueError: Inconsistent UID index, UID 512298481d7f251d65f07ba0877ada1b is associated with multiple docids: {('', 'recensio', 'Members', 'Hans_Mustermann', 'mustermonographie', '++conversation++default', '1294837415513892'): 1973786748, ('', 'recensio', 'Members', 'Hans_Mustermann', 'mustermonographie', '++conversation++default', '1294667619629594'): 1973786601}
+
+
+2012-10-30 17:30:22 ERROR collective.solr.indexer Error occured while getting data for indexing!
+Traceback (most recent call last):
+  File "/home/recensio/eggs/collective.solr-3.0a2-py2.7.egg/collective/solr/indexer.py", line 214, in getData
+    value = value()
+  File "/home/recensio/recensio01-plone42/src/recensio.contenttypes/recensio/contenttypes/content/review.py", line 432, in SearchableText
+    value = " ".join([data, comment.getText().encode('utf8')])
+UnicodeDecodeError: 'ascii' codec can't decode byte 0xc3 in position 64: ordinal not in range(128)
+2012-10-30 17:30:42 ERROR collective.solr.indexer Error occured while getting data for indexing!
+Traceback (most recent call last):
+  File "/home/recensio/eggs/collective.solr-3.0a2-py2.7.egg/collective/solr/indexer.py", line 214, in getData
+    value = value()
+  File "/home/recensio/recensio01-plone42/src/recensio.contenttypes/recensio/contenttypes/content/review.py", line 432, in SearchableText
+    value = " ".join([data, comment.getText().encode('utf8')])
+UnicodeDecodeError: 'ascii' codec can't decode byte 0xc3 in position 44: ordinal not in range(128)
+
+This went away after deleting /Members/Hans_Mustermann
