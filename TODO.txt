@@ -19,7 +19,15 @@ xdv-theme deaktivieren in plone_control_panel
 XDV theme support (collective.xdv) deinstallieren
 
 Produkte reinstallieren:
-alle veralteten
+alle veralteten externen
+recensio.policy (zieht den rest)
+
+Problem: solr-port wird durch recensio.policy geändert. Lösung: Wieder auf den gewünschten port setzen (z.B. 2084 auf recensio00-plone42).
+Problem: classic_theme ist aktiv nach update von plonetheme.classic. (sieht man an authoring.css). Lösung: in portal_skins das skin auf sunburst wechseln.
+Problem: Fehler im rechten Portlet. Lösung: Ignorieren, da es nur beim zope-admin auftritt.
+
+Upgrade-Steps:
+Alle verfügbaren Upgrade-steps durchführen außer jquery und jquerytools.
 
 Recensio Theme reinstallieren migriert das design nach Diazo.
 Einstellung von "XDV theme support" auf "Diazo theme" übertragen?
@@ -105,3 +113,45 @@ Traceback (most recent call last):
 UnicodeDecodeError: 'ascii' codec can't decode byte 0xc3 in position 44: ordinal not in range(128)
 
 This went away after deleting /Members/Hans_Mustermann
+
+
+
+
+xdv-config:
+
+Domains:
+beta.recensio.net
+kielschwein:8010
+localhost:8010
+recensio.syslab.com
+recensio00.fe.rzob.gocept.net
+recensio:8010
+www.recensio.net
+
+Theme template:
+python://recensio.theme/skins/recensio_theme/theme.html
+
+Rules file:
+python://recensio.theme/skins/recensio_theme/rules/default.xml
+
+Unstyled paths:
+^.*/.+/advanced/(source_editor|anchor)\.htm$
+^.*/.+/plone(image|link)\.htm$
+^.*/@@pageviewer
+^.*/aq_parent(/.*)?$
+^.*/emptypage$
+^.*/error_log(/.*)?$
+^.*/image_view_fullscreen$
+^.*/manage$
+^.*/manage_(?!translations_form)[^/]+$
+^.*/manage_addProduct/.*$
+^.*/plugins/searchreplace/searchreplace.htm$
+^.*/plugins/table/(table|row|cell|merge_cells)\.htm$
+^.*/portal_javascripts/.*/jscripts/tiny_mce/.*$
+^.*/refbrowser_popup(\?.*)?$
+^.*/tinymce-upload$
+^.*popup$
+^/googlead1fe7ef91f639f7.html$
+
+Absolute URL prefix:
+recensio
