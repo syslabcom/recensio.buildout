@@ -2,9 +2,10 @@ TODO's for migration to 4.2
 
 - set versioning-policies through GS - DONE
 - RecensioLanguageSelector fixen - DONE
+- login fixen - DONE
 - kommentare fixen - TODO
-- suche anpassen (auch erweiterete Suche, recensio.theme/recensio/theme/skins/recensio_theme/search.pt) - TODO
-- Reste von cdv rausnemhen (z.B. in skins) - TODO
+- suche anpassen (@@search statt search, auch erweiterte Suche, einschränkungen auh für anonymous, recensio.theme/recensio/theme/skins/recensio_theme/search.pt) - TODO
+- Reste von cdv rausnemhen (z.B. default.xml in skins) - TODO
 - schauen was mit collective.solr zu machen ist (update oder nicht?) - TODO
 
 Schritte zur Durchführung der Migration live
@@ -114,6 +115,111 @@ UnicodeDecodeError: 'ascii' codec can't decode byte 0xc3 in position 44: ordinal
 
 This went away after deleting /Members/Hans_Mustermann
 
+Fehler bei comments:
+
+2012-11-02 12:13:10 ERROR Zope.SiteErrorLog 1351854790.710.620149978471 http://localhost:8081/recensio/Members/gerken/test-1/review_view
+Traceback (innermost last):
+  Module ZPublisher.Publish, line 126, in publish
+  Module ZPublisher.mapply, line 77, in mapply
+  Module ZPublisher.Publish, line 46, in call_object
+  Module recensio.contenttypes.browser.review, line 286, in __call__
+  Module Products.Five.browser.pagetemplatefile, line 125, in __call__
+  Module Products.Five.browser.pagetemplatefile, line 59, in __call__
+  Module zope.pagetemplate.pagetemplate, line 113, in pt_render
+   - Warning: Macro expansion failed
+   - Warning: <type 'exceptions.NameError'>: name 'field_name' is not defined
+  Module zope.tal.talinterpreter, line 271, in __call__
+  Module zope.tal.talinterpreter, line 343, in interpret
+  Module zope.tal.talinterpreter, line 888, in do_useMacro
+  Module zope.tal.talinterpreter, line 343, in interpret
+  Module zope.tal.talinterpreter, line 533, in do_optTag_tal
+  Module zope.tal.talinterpreter, line 518, in do_optTag
+  Module zope.tal.talinterpreter, line 513, in no_tag
+  Module zope.tal.talinterpreter, line 343, in interpret
+  Module zope.tal.talinterpreter, line 852, in do_condition
+  Module zope.tal.talinterpreter, line 343, in interpret
+  Module zope.tal.talinterpreter, line 742, in do_insertStructure_tal
+  Module Products.PageTemplates.Expressions, line 218, in evaluateStructure
+  Module zope.tales.tales, line 696, in evaluate
+   - URL: file:/Users/philip/.cache/buildout/eggs/plonetheme.sunburst-1.2.7-py2.7.egg/plonetheme/sunburst/skins/sunburst_templates/main_template.pt
+   - Line 134, Column 12
+   - Expression: <StringExpr u'plone.belowcontent'>
+   - Names:
+      {'args': (),
+       'container': <PresentationOnlineResource at /recensio/Members/gerken/test-1>,
+       'context': <PresentationOnlineResource at /recensio/Members/gerken/test-1>,
+       'default': <object object at 0x10d1e4b70>,
+       'here': <PresentationOnlineResource at /recensio/Members/gerken/test-1>,
+       'loop': {},
+       'nothing': None,
+       'options': {},
+       'repeat': <Products.PageTemplates.Expressions.SafeMapping object at 0x115f65c58>,
+       'request': <HTTPRequest, URL=http://localhost:8081/recensio/Members/gerken/test-1/review_view>,
+       'root': <Application at >,
+       'template': <Products.Five.browser.pagetemplatefile.ViewPageTemplateFile object at 0x11117eb90>,
+       'traverse_subpath': [],
+       'user': <PropertiedUser 'rescue'>,
+       'view': <Products.Five.metaclass.View object at 0x115e9ca90>,
+       'views': <Products.Five.browser.pagetemplatefile.ViewMapper object at 0x115e9c6d0>}
+  Module zope.contentprovider.tales, line 80, in __call__
+  Module plone.app.viewletmanager.manager, line 154, in render
+  Module plone.app.viewletmanager.manager, line 85, in render
+  Module plone.app.layout.viewlets.common, line 48, in render
+  Module Products.Five.browser.pagetemplatefile, line 125, in __call__
+  Module Products.Five.browser.pagetemplatefile, line 59, in __call__
+  Module zope.pagetemplate.pagetemplate, line 113, in pt_render
+  Module zope.tal.talinterpreter, line 271, in __call__
+  Module zope.tal.talinterpreter, line 343, in interpret
+  Module zope.tal.talinterpreter, line 852, in do_condition
+  Module zope.tal.talinterpreter, line 343, in interpret
+  Module zope.tal.talinterpreter, line 533, in do_optTag_tal
+  Module zope.tal.talinterpreter, line 518, in do_optTag
+  Module zope.tal.talinterpreter, line 513, in no_tag
+  Module zope.tal.talinterpreter, line 343, in interpret
+  Module zope.tal.talinterpreter, line 533, in do_optTag_tal
+  Module zope.tal.talinterpreter, line 518, in do_optTag
+  Module zope.tal.talinterpreter, line 513, in no_tag
+  Module zope.tal.talinterpreter, line 343, in interpret
+  Module zope.tal.talinterpreter, line 852, in do_condition
+  Module zope.tal.talinterpreter, line 343, in interpret
+  Module zope.tal.talinterpreter, line 821, in do_loop_tal
+  Module zope.tal.talinterpreter, line 343, in interpret
+  Module zope.tal.talinterpreter, line 533, in do_optTag_tal
+  Module zope.tal.talinterpreter, line 518, in do_optTag
+  Module zope.tal.talinterpreter, line 513, in no_tag
+  Module zope.tal.talinterpreter, line 343, in interpret
+  Module zope.tal.talinterpreter, line 852, in do_condition
+  Module zope.tal.talinterpreter, line 343, in interpret
+  Module zope.tal.talinterpreter, line 531, in do_optTag_tal
+  Module zope.tal.talinterpreter, line 513, in no_tag
+  Module zope.tal.talinterpreter, line 343, in interpret
+  Module zope.tal.talinterpreter, line 742, in do_insertStructure_tal
+  Module Products.PageTemplates.Expressions, line 218, in evaluateStructure
+  Module zope.tales.tales, line 696, in evaluate
+   - URL: /Users/philip/workspace/recensio/src/recensio.policy/recensio/policy/browser/templates/comments.pt
+   - Line 62, Column 20
+   - Expression: <PythonExpr (view.cook(reply.getText()))>
+   - Names:
+      {'args': (),
+       'container': <PresentationOnlineResource at /recensio/Members/gerken/test-1>,
+       'context': <PresentationOnlineResource at /recensio/Members/gerken/test-1>,
+       'default': <object object at 0x10d1e4b70>,
+       'here': <PresentationOnlineResource at /recensio/Members/gerken/test-1>,
+       'loop': {},
+       'nothing': None,
+       'options': {},
+       'repeat': <Products.PageTemplates.Expressions.SafeMapping object at 0x115fae578>,
+       'request': <HTTPRequest, URL=http://localhost:8081/recensio/Members/gerken/test-1/review_view>,
+       'root': <Application at >,
+       'template': <Products.Five.browser.pagetemplatefile.ViewPageTemplateFile object at 0x111624a50>,
+       'traverse_subpath': [],
+       'user': <PropertiedUser 'rescue'>,
+       'view': <Products.Five.viewlet.metaconfigure.CommentsViewlet object at 0x11601f890>,
+       'views': <Products.Five.browser.pagetemplatefile.ViewMapper object at 0x11601f990>}
+  Module zope.tales.pythonexpr, line 59, in __call__
+   - __traceback_info__: (view.cook(reply.getText()))
+  Module <string>, line 1, in <module>
+AttributeError: 'CommentsViewlet' object has no attribute 'cook'
 
 
 
