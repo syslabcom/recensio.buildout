@@ -4,9 +4,9 @@ TODO's for migration to 4.2
 - RecensioLanguageSelector fixen - DONE
 - login fixen - DONE
 - kommentare fixen - TODO
-- suche anpassen (@@search statt search, auch erweiterte Suche, einschränkungen auh für anonymous, recensio.theme/recensio/theme/skins/recensio_theme/search.pt) - TODO
+- suche anpassen (@@search statt search, auch erweiterte Suche, einschränkungen-dropdown auch für anonymous testen, recensio.theme/recensio/theme/skins/recensio_theme/search.pt fixen) - TODO
 - Reste von cdv rausnemhen (z.B. default.xml in skins) - TODO
-- schauen was mit collective.solr zu machen ist (update oder nicht?) - TODO
+- schauen was mit collective.solr zu machen ist (old: collective.solr-3.0a2 update auf 3.0 oder nicht?) - TODO
 
 Schritte zur Durchführung der Migration live
 
