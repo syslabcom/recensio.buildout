@@ -3,42 +3,51 @@ TODO's for migration to 4.2
 - set versioning-policies through GS - DONE
 - RecensioLanguageSelector fixen - DONE
 - login fixen - DONE
-- kommentare fixen - TODO
-- suche anpassen (@@search statt search, auch erweiterte Suche, einschränkungen-dropdown auch für anonymous testen, recensio.theme/recensio/theme/skins/recensio_theme/search.pt fixen) - TODO
-- Reste von cdv rausnemhen (z.B. default.xml in skins) - TODO
-- schauen was mit collective.solr zu machen ist (old: collective.solr-3.0a2 update auf 3.0 oder nicht?) - TODO
+- kommentare fixen - DONE
+- suche anpassen (@@search statt search, auch erweiterte Suche, einschränkungen-dropdown auch für anonymous testen, recensio.theme/recensio/theme/skins/recensio_theme/search.pt fixen) - DONE
+- Reste von cdv rausnemhen (z.B. default.xml in skins) - DONE
+- schauen was mit collective.solr zu machen ist (old: collective.solr-3.0a2 update auf 3.0 oder nicht?) - DONE
 
 Schritte zur Durchführung der Migration live
 
-Plone migrieren
-falls lokal: BDPDebugMode raus und entweder blobs rein oder experimental.gracefulblobmissing drin haben
-dauert ca 1h
-Alle dann noch verfügbaren upgrade-steps laufen lassen
+- Plone migrieren
+  falls lokal: BDPDebugMode raus und entweder blobs rein oder experimental.gracefulblobmissing drin haben
+  dauert ca 1h
 
-Produkte deinstalliern:
-xdv-theme deaktivieren in plone_control_panel
-XDV theme support (collective.xdv) deinstallieren
+- Alle dann noch verfügbaren upgrade-steps laufen lassen
 
-Produkte reinstallieren:
-alle veralteten externen
-recensio.policy (zieht den rest)
+- Produkte deinstalliern:
+  xdv-theme deaktivieren in plone_control_panel
+  XDV theme support (collective.xdv) deinstallieren
+
+- Upgrade-Steps:
+  Alle verfügbaren Upgrade-steps durchführen außer jquery und jquerytools.
+
+- Produkte reinstallieren:
+  alle veralteten externen
+  recensio.policy (zieht den rest)
+
+- "Recensio Theme" reinstallieren migriert das design nach Diazo.
+   Einstellung von "XDV theme support" auf "Diazo theme" übertragen? Nicht nötig!
+
+- Solr reindizieren:
+  /@@solr-maintenance/clear und /@@solr-maintenance/reindex
+
 
 Problem: solr-port wird durch recensio.policy geändert. Lösung: Wieder auf den gewünschten port setzen (z.B. 2084 auf recensio00-plone42).
+
 Problem: classic_theme ist aktiv nach update von plonetheme.classic. (sieht man an authoring.css). Lösung: in portal_skins das skin auf sunburst wechseln.
-Problem: Fehler im rechten Portlet. Lösung: Ignorieren, da es nur beim zope-admin auftritt.
 
-Upgrade-Steps:
-Alle verfügbaren Upgrade-steps durchführen außer jquery und jquerytools.
+Problem: Fehler im rechten Portlet. Lösung: Ignorieren, da es nur auftritt solange solr nicht reindiziert wurde.
 
-Recensio Theme reinstallieren migriert das design nach Diazo.
-Einstellung von "XDV theme support" auf "Diazo theme" übertragen?
+
 
 
 
 
 Notizen:
 catalog clear und migrate dauert mit und ohne blobs ewig. Speedup?
-sentry deaktivieren?
+Sentry deaktivieren?
 
 Fehler beim upgrade:
 
