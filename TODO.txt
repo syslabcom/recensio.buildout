@@ -8,11 +8,23 @@ TODO's for migration to 4.2
 - Reste von cdv rausnemhen (z.B. default.xml in skins) - DONE
 - schauen was mit collective.solr zu machen ist (old: collective.solr-3.0a2 update auf 3.0 oder nicht?) - DONE
 
-Schritte zur Durchführung der Migration live
+Schritte zur Durchführung der Migration auf dem testserver:
+
+- solr-instance, zeo und worker im fg starten: http://recensio.syslab.com:8099
+
+- solr-instance muss auf 8984 laufen oder in http://recensio.syslab.com:8099/recensio/@@solr-controlpanel auf 4084 gesetzt werden (kann nciht speichern)
+- solr-instace wird auf 195.62.125.219 erwartet: auf dem testserver auf 176.9.59.108 oder localhost umstellen (kann nicht speichern)
+
+- try: delete /Members/Hans_Mustermann in ZMI (won't help)
+- try: delete user "Hans Musterman" http://recensio.syslab.com:8099/recensio/@@usergroup-userprefs (won't help)
+- try: update uid_catalog (not working)
+- try: reindex index UID in portal_catalog ()
+- try: reinstall collective.solr (kann jetzt Einträge in solr-controlpanel speichern!)
 
 - Plone migrieren
+  http://recensio.syslab.com:8099/recensio/@@plone-upgrade
   falls lokal: BDPDebugMode raus und entweder blobs rein oder experimental.gracefulblobmissing drin haben
-  dauert ca 1h
+  dauert ca 1h (Wartezeit nach xxx INFO plone.app.upgrade Ran upgrade step: Add Site Administrator role)
 
 - Alle dann noch verfügbaren upgrade-steps laufen lassen
 
@@ -40,8 +52,23 @@ Problem: classic_theme ist aktiv nach update von plonetheme.classic. (sieht man 
 
 Problem: Fehler im rechten Portlet. Lösung: Ignorieren, da es nur auftritt solange solr nicht reindiziert wurde.
 
+Problem: supervisorctl findet keine conf (liegen in parts/supervisor/supervisord.conf)
 
+Problem: buildout lädt recensio.policy nicht als src sondern als egg
 
+2012-12-06 14:51:50 ERROR plone.app.upgrade Upgrade aborted. Error:
+Traceback (most recent call last):
+  File "/home/recensio/eggs/Products.CMFPlone-4.2.2-py2.7.egg/Products/CMFPlone/MigrationTool.py", line 178, in upgrade
+    step['step'].doStep(setup)
+  File "/home/recensio/eggs/Products.GenericSetup-1.7.3-py2.7.egg/Products/GenericSetup/upgrade.py", line 140, in doStep
+    self.handler(tool)
+  File "/home/recensio/eggs/plone.app.upgrade-1.2.2-py2.7.egg/plone/app/upgrade/v41/alphas.py", line 278, in to41alpha3
+    optimize_indexes(context)
+  File "/home/recensio/eggs/plone.app.upgrade-1.2.2-py2.7.egg/plone/app/upgrade/v41/alphas.py", line 271, in optimize_indexes
+    convert_to_uuidindex(catalog, index)
+  File "/home/recensio/eggs/plone.app.upgrade-1.2.2-py2.7.egg/plone/app/upgrade/v41/alphas.py", line 216, in convert_to_uuidindex
+    'with multiple docids: %r' % (k, paths))
+ValueError: Inconsistent UID index, UID 512298481d7f251d65f07ba0877ada1b is associated with multiple docids: {('', 'recensio', 'Members', 'Hans_Mustermann', 'mustermonographie', '++conversation++default', '1294837415513892'): 1973786748, ('', 'recensio', 'Members', 'Hans_Mustermann', 'mustermonographie', '++conversation++default', '1294667619629594'): 1973786601}
 
 
 
