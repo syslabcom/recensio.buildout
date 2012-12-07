@@ -19,24 +19,17 @@ Schritte zur Durchführung der Migration auf dem testserver:
 
 - xdv deaktivieren: recensio.syslab.com/plone_control_panel -> xdv
 
+- Diazo installieren
+
 - solr-instance muss auf 8984 laufen oder in http://recensio.syslab.com:8099/recensio/@@solr-controlpanel auf 4084 gesetzt werden (kann nciht speichern)
 
 - Einträge von http://www.recensio.net/@@solr-controlpanel nach http://recensio.syslab.com/@@solr-controlpanel kopieren
 
-- http://recensio.syslab.com/@@solr-maintenance/clear
-
 - http://recensio.syslab.com/Members/Hans_Mustermann/delete_confirmation
 
-Maybe:
-- try: delete /Members/Hans_Mustermann in ZMI (won't help)
+- http://recensio.syslab.com/@@solr-maintenance/clear
 
-Bad:
-- try: delete user "Hans Musterman" http://recensio.syslab.com:8099/recensio/@@usergroup-userprefs (won't help)
-- try: update uid_catalog (not working)
-- try: reindex index UID in portal_catalog (nope)
-
-Good
-- try: reinstall collective.solr (kann jetzt Einträge in solr-controlpanel speichern!)
+- http://recensio.syslab.com/@@solr-maintenance/reindex (dauert: 9726 items in 1553.082s)
 
 - Plone migrieren
   http://recensio.syslab.com:8099/recensio/@@plone-upgrade
@@ -59,8 +52,6 @@ Good
 - "Recensio Theme" reinstallieren migriert das design nach Diazo.
    Einstellung von "XDV theme support" auf "Diazo theme" übertragen? Nicht nötig!
 
-- Solr reindizieren:
-  /@@solr-maintenance/clear und /@@solr-maintenance/reindex
 
 
 Problem: solr-port wird durch recensio.policy geändert. Lösung: Wieder auf den gewünschten port setzen (z.B. 2084 auf recensio00-plone42).
@@ -89,6 +80,34 @@ Traceback (most recent call last):
     'with multiple docids: %r' % (k, paths))
 ValueError: Inconsistent UID index, UID 512298481d7f251d65f07ba0877ada1b is associated with multiple docids: {('', 'recensio', 'Members', 'Hans_Mustermann', 'mustermonographie', '++conversation++default', '1294837415513892'): 1973786748, ('', 'recensio', 'Members', 'Hans_Mustermann', 'mustermonographie', '++conversation++default', '1294667619629594'): 1973786601}
 
+Maybe:
+- try: delete /Members/Hans_Mustermann in ZMI (won't help)
+
+Bad:
+- try: delete user "Hans Musterman" http://recensio.syslab.com:8099/recensio/@@usergroup-userprefs (won't help)
+- try: update uid_catalog (not working)
+- try: reindex index UID in portal_catalog (nope)
+
+Good
+- try: reinstall collective.solr (kann jetzt Einträge in solr-controlpanel speichern!)
+
+
+
+2012-12-06 20:04:06 ERROR plone.app.upgrade Upgrade aborted. Error:
+Traceback (most recent call last):
+  File "/home/recensio/eggs/Products.CMFPlone-4.2.2-py2.7.egg/Products/CMFPlone/MigrationTool.py", line 178, in upgrade
+    step['step'].doStep(setup)
+  File "/home/recensio/eggs/Products.GenericSetup-1.7.3-py2.7.egg/Products/GenericSetup/upgrade.py", line 140, in doStep
+    self.handler(tool)
+  File "/home/recensio/eggs/plone.app.upgrade-1.2.2-py2.7.egg/plone/app/upgrade/v41/alphas.py", line 278, in to41alpha3
+    optimize_indexes(context)
+  File "/home/recensio/eggs/plone.app.upgrade-1.2.2-py2.7.egg/plone/app/upgrade/v41/alphas.py", line 264, in optimize_indexes
+    for index in catalog.getIndexObjects():
+  File "/home/recensio/eggs/Products.ZCatalog-2.13.23-py2.7.egg/Products/ZCatalog/ZCatalog.py", line 570, in getIndexObjects
+    return [getIndex(name) for name in self.indexes()]
+  File "/home/recensio/eggs/Products.ZCatalog-2.13.23-py2.7.egg/Products/ZCatalog/Catalog.py", line 264, in getIndex
+    return self.indexes[name].__of__(self)
+KeyError: 'path_string'
 
 
 Notizen:
