@@ -54,16 +54,33 @@ Schritte zur Durchführung der Migration auf dem testserver:
 
 
 
-Problem: solr-port wird durch recensio.policy geändert. Lösung: Wieder auf den gewünschten port setzen (z.B. 2084 auf recensio00-plone42).
+Problem: solr-port wird durch das laufen lassen von buidlout geändert.
+Lösung: Wieder auf den gewünschten port setzen (z.B. 4084 auf recensio01).
 
-Problem: classic_theme ist aktiv nach update von plonetheme.classic. (sieht man an authoring.css). Lösung: in portal_skins das skin auf sunburst wechseln.
+Problem: classic_theme ist aktiv nach update von plonetheme.classic. (sieht man an authoring.css).
+Lösung: in portal_skins das skin auf sunburst wechseln.
 
 Problem: Fehler im rechten Portlet. Lösung: Ignorieren, da es nur auftritt solange solr nicht reindiziert wurde.
+Lösung: solr-reindex
 
-Problem: supervisorctl findet keine conf (liegen in parts/supervisor/supervisord.conf).
-Lösung: supervisord löschen und "./bin/buildout install supervisor" laufen lassen. Irgendwas überschreibt das.
+Problem: buildout lädt recensio.policy nicht als src sondern als egg.
+Lösung: ./bin/develop activate recensio.policy
 
-Problem: buildout lädt recensio.policy nicht als src sondern als egg. gelöst duch ./bin/develop activate recensio.policy
+Problem: nach ./bin/buildout gibt es keine parts/instance1/etc/zope.conf mehr...
+Workaround: ./bin/buildout install instance1 laufen lassen.
+Lösung: ?
+
+Problem: supervisor findet nach ./bin/buildout keine conf (liegen in parts/supervisor/supervisord.conf).
+Workaround: supervisord löschen und "./bin/buildout install supervisor" laufen lassen. Irgendwas überschreibt das.
+Lösung: ?
+
+Problem: Plone-Upgrade hängt bei optimize-indexes
+Workarounds:
+  1. collective.solr/src/collective/solr/monkey.py:42 patchen zu indexes = list(set(self._catalog.indexes.keys()))
+  2. patch plone/app/upgrade/v41/alphas.py:214 pass statt raise
+Lösung:
+  1. collective.solr fixen
+  2. ?? das Objekt löschen reicht nicht...
 
 
 2012-12-06 14:51:50 ERROR plone.app.upgrade Upgrade aborted. Error:
