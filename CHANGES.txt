@@ -4,7 +4,26 @@ Changelog
 1.0.4 (unreleased)
 ------------------
 
-- Nothing changed yet.
+-    #5632 - Upgrade to plone4.2
+-    #5636 Newsletter Archiv chronologisch
+-    #5510 sehepunkte import unvollständig (Erledigt, lediglich offen als remainder wegen dem folder der gelöscht werden kann)
+-    #3566 Changes to presentation forms
+-    #3488 Präsentationsformular (pm, paev, paj, por)
+-    #4045 Sprachfiltermenü
+-    #4223 Anzeigeprobleme auf dem iPad
+-    #5115 Lizenzvereinbarung im Präsentationsformular
+-    #4212 Sortierung Präsentationen
+-    #5751 Umplatzierung der Social Buttons
+-    #5579 Anpassungen in der Navigation (war LF 84+LF 78)
+-    #5635 RSS: Einbeziehung Untertitel
+-    #5637 Etablierung von ungekürzten URLs
+-    #5638 Inhalte Reiter
+-    #4215 Aufklappbarkeit von Issues via Ajax
+-    #4044 vor-/zurück-Navigation
+-    #4041 zur Anmeldung eine „fancy box“
+-    #4043 Trefferlisten: Newsletter-Ergebnisse (solr)
+-    #5495 ISSN wird als ISBN angezeigt
+-    #5596 Autor/Hg. besteht NICHT aus Vorname+Nachname
 
 
 1.0.3 (2013-02-01)
