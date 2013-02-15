@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.0.4 (unreleased)
+2.0.0 (2013-02-15)
 ------------------
 
 -    #5632 - Upgrade to plone4.2
