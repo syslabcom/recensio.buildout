@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.0.4 (unreleased)
+2.0.4 (2013-05-06)
 ------------------
 
 - Removed all source checkouts, created custom eggs as necessary
