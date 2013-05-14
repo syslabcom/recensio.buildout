@@ -15,3 +15,4 @@ buildout.cfg
 tmp_translations/
 .*.swp
 *.pyc
+*.sublime-workspace
