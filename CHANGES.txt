@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.0.6 (unreleased)
+2.0.6 (2013-06-18)
 ------------------
 
 - added Products.PloneHotfix20130618 [reinhardt]
