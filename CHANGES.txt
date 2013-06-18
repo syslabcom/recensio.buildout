@@ -4,7 +4,7 @@ Changelog
 2.0.6.2 (unreleased)
 --------------------
 
-- Nothing changed yet.
+- bumped Products.PloneHotfix20130618 [reinhardt]
 
 
 2.0.6.1 (2013-06-18)
