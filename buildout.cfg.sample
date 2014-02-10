@@ -1,3 +1,5 @@
 [buildout]
-extends = profiles/dev.cfg
+extends = 
+  secret.cfg 
+  profiles/dev.cfg
 
