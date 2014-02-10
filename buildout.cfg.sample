@@ -1,17 +1,3 @@
 [buildout]
 extends = profiles/dev.cfg
-find-links +=
-    http://XXX:XXX@sdist.zopyx.com
-site=http://localhost/recensio:8080
 
-[instance-settings]
-user = XXX:XXX
-
-[local]
-host=patrick@localhost
-path=/home/patrick/.virtualenvs/recensio.buildout
-
-[production]
-user = #Your user for ssh. From there it does sudo to recensio
-web_password = # The password for the web admin, is on
-               # production in secret.cfg under isntance-settings
