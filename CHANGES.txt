@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2015-3 (unreleased)
+2015-3 (2015-09-01)
 -------------------
 
 - Nothing changed yet.
