@@ -1,4 +1,5 @@
 .installed.cfg
+.batou.buildout.success
 .mr.developer.cfg
 *.svn/
 bin/
