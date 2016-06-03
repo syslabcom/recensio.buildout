@@ -16,3 +16,4 @@ tmp_translations/
 .*.swp
 *.pyc
 *.sublime-workspace
+local/
