@@ -1,6 +1,12 @@
 Changelog
 =========
 
+PloneHotfix20170118 (unreleased)
+--------------------------------
+
+- Nothing changed yet.
+
+
 PloneHotfix20170117 (2017-01-17)
 --------------------------------
 
