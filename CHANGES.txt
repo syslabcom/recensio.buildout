@@ -1,8 +1,8 @@
 Changelog
 =========
 
-2016-1 (unreleased)
--------------------
+PloneHotfix20170117 (2017-01-17)
+--------------------------------
 
 - Nothing changed yet.
 
