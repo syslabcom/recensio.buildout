@@ -2,6 +2,7 @@
 /.mr.developer.cfg
 /bin/
 /buildout.cfg
+/custom.cfg
 /develop-eggs/
 /downloads/
 /parts/
