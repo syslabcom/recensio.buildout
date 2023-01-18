@@ -1,0 +1,37 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        config:
+          - ["Py3.9-Plone6", "3.9"]
+          - ["Py3.10-Plone6", "3.10"]
+          - ["Py3.11-Plone6", "3.11"]
+    runs-on: ubuntu-latest
+    name: ${{ matrix.config[0] }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.config[1] }}
+      - name: Cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/pip
+            **/eggs
+            **/downloads
+          key: ${{ runner.os }}-cache-${{ hashFiles('setup.*', '*.cfg') }}-${{ matrix.config[0] }}
+          restore-keys: |
+            ${{ runner.os }}-cache-
+      - name: Run buildout
+        run: |
+          echo "[buildout]" > custom.cfg
+          ln -s profiles/development.cfg buildout.cfg
+          make
