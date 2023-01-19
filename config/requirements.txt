@@ -1,2 +1,3 @@
 Plone
 plone.recipe.zope2instance
+zope.testrunner
