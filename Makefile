@@ -2,7 +2,7 @@
 all: .installed.cfg
 
 py3/bin/buildout: py3/bin/pip3 requirements.txt $(wildcard config/*.txt)
-	# To avoid really be sure we have the desired setuptools we need to uninstall it first
+	# To really be sure we have the desired setuptools we need to uninstall it first
 	./py3/bin/pip3 uninstall -y setuptools
 	# ... and reinstall it later
 	./py3/bin/pip3 install -IUr config/requirements-venv.txt -c config/constraints.txt
