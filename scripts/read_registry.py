@@ -10,7 +10,7 @@ sites = app.objectValues("Plone Site")  # noqa:F821
 for filename in sys.argv[3:]:
     for site in sites:
         importer = RegistryImporter(site.portal_registry, FakeEnv())
-        with open(filename) as f:
+        with open(filename, "br") as f:
             print(f"Importing {filename} in {site}")
             importer.importDocument(f.read())
 commit()
