@@ -34,7 +34,7 @@ graceful: .installed.cfg
 	./bin/supervisord 2> /dev/null || ( \
 	    ./bin/supervisorctl reread && \
 		./bin/supervisorctl update && \
-		for process in `./bin/supervisorctl status|awk '{print $1}'`; do \
+		for process in `./bin/supervisorctl status|awk '{print $$1}'`; do \
 			./bin/supervisorctl restart "$$process" && \
 			sleep 30; \
 		done \
