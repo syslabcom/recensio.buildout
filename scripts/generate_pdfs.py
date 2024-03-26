@@ -15,7 +15,7 @@ class GeneratePdfs(InstanceScript):
         )
         for brain in reviews:
             review = brain.getObject()
-            if not getattr(review, "generatedPdf", None):
+            if not getattr(review, "generatedPdf", None) and hasattr(review, "review"):
                 logger.info("Updating PDF for %s", brain.getPath())
                 update_generated_pdf(review)
                 commit()
