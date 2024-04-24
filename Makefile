@@ -19,7 +19,7 @@ src/ploneintranet/.pre-commit-config.yaml: py3/bin/buildout templates/.pre-commi
 
 .PHONY: upgrade
 upgrade:
-	./bin/upgrade plone_upgrade -S &&  ./bin/upgrade install -Sp
+	./bin/upgrade plone_upgrade -A &&  ./bin/upgrade install -Ap
 
 .PHONY: clean
 clean:
