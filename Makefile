@@ -7,7 +7,7 @@ py3/bin/buildout: py3/bin/pip3 requirements.txt $(wildcard config/*.txt)
 	# ... and reinstall it later
 	./py3/bin/pip3 install -IUr config/requirements-venv.txt -c config/constraints.txt
 	./py3/bin/pip3 install -IUr requirements.txt
-	./py3/bin/pip3 install plone.recipe.zope2instance==6.13.0
+	./py3/bin/pip list | grep "plone.recipe.zope2instance.*6.12.2$$" && ./py3/bin/pip3 install plone.recipe.zope2instance==6.13.0
 
 py3/bin/pip3:
 	python3 -m venv py3
