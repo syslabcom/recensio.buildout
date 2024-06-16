@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+ Licensed to the Apache Software Foundation (ASF) under one or more
+ contributor license agreements.  See the NOTICE file distributed with
+ this work for additional information regarding copyright ownership.
+ The ASF licenses this file to You under the Apache License, Version 2.0
+ (the "License"); you may not use this file except in compliance with
+ the License.  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<!--
+     For more details about configurations options that may appear in
+     this file, see http://wiki.apache.org/solr/SolrConfigXml.
+-->
+<config>
+  <!-- In all configuration below, a prefix of "solr." for class names
+       is an alias that causes solr to search appropriate packages,
+       including org.apache.solr.(search|update|request|core|analysis)
+
+       You may also specify a fully qualified Java classname if you
+       have your own custom plugins.
+    -->
+
+  <!-- Controls what version of Lucene various components of Solr
+       adhere to.  Generally, you want to use the latest version to
+       get all bug fixes and improvements. It is highly recommended
+       that you fully re-index after changing this setting as it can
+       affect both how text is indexed and queried.
+  -->
+  <luceneMatchVersion>7.7.2</luceneMatchVersion>
+
+  <!-- <lib/> directives can be used to instruct Solr to load any Jars
+       identified and use them to resolve any "plugins" specified in
+       your solrconfig.xml or schema.xml (ie: Analyzers, Request
+       Handlers, etc...).
+
+       All directories and paths are resolved relative to the
+       instanceDir.
+
+       Please note that <lib/> directives are processed in the order
+       that they appear in your solrconfig.xml file, and are "stacked"
+       on top of each other when building a ClassLoader - so if you have
+       plugin jars with dependencies on other jars, the "lower level"
+       dependency jars should be loaded first.
+
+       If a "./lib" directory exists in your instanceDir, all files
+       found in it are included as if you had used the following
+       syntax...
+
+              <lib dir="./lib" />
+    -->
+
+  <!-- A 'dir' option by itself adds any files found in the directory
+       to the classpath, this is useful for including all jars in a
+       directory.
+
+       When a 'regex' is specified in addition to a 'dir', only the
+       files in that directory which completely match the regex
+       (anchored on both ends) will be included.
+
+       If a 'dir' option (with or without a regex) is used and nothing
+       is found that matches, a warning will be logged.
+
+       The examples below can be used to load some solr-contribs along
+       with their external dependencies.
+    -->
+  <lib dir="${solr.install.dir:../../../..}/contrib/extraction/lib" regex=".*\.jar" />
+  <lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-cell-\d.*\.jar" />
+  
+  <lib dir="${solr.install.dir:../../../..}/contrib/clustering/lib/" regex=".*\.jar" />
+  <lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-clustering-\d.*\.jar" />
+
+  <lib dir="${solr.install.dir:../../../..}/contrib/langid/lib/" regex=".*\.jar" />
+  <lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-langid-\d.*\.jar" />
+
+  <lib dir="${solr.install.dir:../../../..}/contrib/velocity/lib" regex=".*\.jar" />
+  <!-- browse-resources must come before solr-velocity JAR in order to override localized resources -->
+  <lib path="${solr.install.dir:../../../..}/example/files/browse-resources"/>
+  <lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-velocity-\d.*\.jar" />
+  <!-- an exact 'path' can be used instead of a 'dir' to specify a
+       specific jar file.  This will cause a serious error to be logged
+       if it can't be loaded.
+    -->
+  <!--
+     <lib path="../a-jar-that-does-not-exist.jar" />
+  -->
+
+  <!-- Data Directory
+
+       Used to specify an alternate directory to hold all index data
+       other than the default ./data under the Solr home.  If
+       replication is in use, this should match the replication
+       configuration.
+    -->
+  <dataDir>${solr.data.dir:}</dataDir>
+
+
+  <!-- The DirectoryFactory to use for indexes.
+
+       solr.StandardDirectoryFactory is filesystem
+       based and tries to pick the best implementation for the current
+       JVM and platform.  solr.NRTCachingDirectoryFactory, the default,
+       wraps solr.StandardDirectoryFactory and caches small files in memory
+       for better NRT performance.
+
+       One can force a particular implementation via solr.MMapDirectoryFactory,
+       solr.NIOFSDirectoryFactory, or solr.SimpleFSDirectoryFactory.
+
+       solr.RAMDirectoryFactory is memory based and not persistent.
+    -->
+  <directoryFactory name="DirectoryFactory"
+                    class="${solr.directoryFactory:solr.NRTCachingDirectoryFactory}"/>
+
+  <!-- The CodecFactory for defining the format of the inverted index.
+       The default implementation is SchemaCodecFactory, which is the official Lucene
+       index format, but hooks into the schema to provide per-field customization of
+       the postings lists and per-document values in the fieldType element
+       (postingsFormat/docValuesFormat). Note that most of the alternative implementations
+       are experimental, so if you choose to customize the index format, it's a good
+       idea to convert back to the official format e.g. via IndexWriter.addIndexes(IndexReader)
+       before upgrading to a newer version to avoid unnecessary reindexing.
+  -->
+  <codecFactory class="solr.SchemaCodecFactory"/>
+
+  <!-- ### DEFAULT ABOVE ### -->
+
+  <!-- Request Dispatcher
+
+       This section contains instructions for how the SolrDispatchFilter
+       should behave when processing requests for this SolrCore.
+    -->
+  <requestDispatcher>
+    <!-- Request Parsing
+
+         These settings indicate how Solr Requests may be parsed, and
+         what restrictions may be placed on the ContentStreams from
+         those requests
+
+         enableRemoteStreaming - enables use of the stream.file
+         and stream.url parameters for specifying remote streams.
+
+         multipartUploadLimitInKB - specifies the max size (in KiB) of
+         Multipart File Uploads that Solr will allow in a Request.
+
+         formdataUploadLimitInKB - specifies the max size (in KiB) of
+         form data (application/x-www-form-urlencoded) sent via
+         POST. You can use POST to pass request parameters not
+         fitting into the URL.
+
+         addHttpRequestToContext - if set to true, it will instruct
+         the requestParsers to include the original HttpServletRequest
+         object in the context map of the SolrQueryRequest under the
+         key "httpRequest". It will not be used by any of the existing
+         Solr components, but may be useful when developing custom
+         plugins.
+
+         *** WARNING ***
+         Before enabling remote streaming, you should make sure your
+         system has authentication enabled.
+
+    <requestParsers enableRemoteStreaming="false"
+                    multipartUploadLimitInKB="-1"
+                    formdataUploadLimitInKB="-1"
+                    addHttpRequestToContext="false"/>
+      -->
+
+    <requestParsers enableRemoteStreaming="true"
+                    multipartUploadLimitInKB="-1"
+                    formdataUploadLimitInKB="-1"
+                    addHttpRequestToContext="false"/>
+
+    <!-- HTTP Caching
+
+         Set HTTP caching related parameters (for proxy caches and clients).
+
+         The options below instruct Solr not to output any HTTP Caching
+         related headers
+      -->
+    <httpCaching never304="true" />
+    <!-- If you include a <cacheControl> directive, it will be used to
+         generate a Cache-Control header (as well as an Expires header
+         if the value contains "max-age=")
+
+         By default, no Cache-Control header is generated.
+
+         You can use the <cacheControl> option even if you have set
+         never304="true"
+      -->
+    <!--
+       <httpCaching never304="true" >
+         <cacheControl>max-age=30, public</cacheControl>
+       </httpCaching>
+      -->
+    <!-- To enable Solr to respond with automatically generated HTTP
+         Caching headers, and to response to Cache Validation requests
+         correctly, set the value of never304="false"
+
+         This will cause Solr to generate Last-Modified and ETag
+         headers based on the properties of the Index.
+
+         The following options can also be specified to affect the
+         values of these headers...
+
+         lastModFrom - the default value is "openTime" which means the
+         Last-Modified value (and validation against If-Modified-Since
+         requests) will all be relative to when the current Searcher
+         was opened.  You can change it to lastModFrom="dirLastMod" if
+         you want the value to exactly correspond to when the physical
+         index was last modified.
+
+         etagSeed="..." is an option you can change to force the ETag
+         header (and validation against If-None-Match requests) to be
+         different even if the index has not changed (ie: when making
+         significant changes to your config file)
+
+         (lastModifiedFrom and etagSeed are both ignored if you use
+         the never304="true" option)
+      -->
+    <!--
+       <httpCaching lastModifiedFrom="openTime"
+                    etagSeed="Solr">
+         <cacheControl>max-age=30, public</cacheControl>
+       </httpCaching>
+      -->
+  </requestDispatcher>
+
+  <!-- The default high-performance update handler -->
+  <updateHandler class="solr.DirectUpdateHandler2">
+
+    <!-- Enables a transaction log, used for real-time get, durability, and
+         and solr cloud replica recovery.  The log can grow as big as
+         uncommitted changes to the index, so use of a hard autoCommit
+         is recommended (see below).
+         "dir" - the target directory for transaction logs, defaults to the
+                solr data directory.
+         "numVersionBuckets" - sets the number of buckets used to keep
+                track of max version values when checking for re-ordered
+                updates; increase this value to reduce the cost of
+                synchronizing access to version buckets during high-volume
+                indexing, this requires 8 bytes (long) * numVersionBuckets
+                of heap space per Solr core.
+    -->
+    <updateLog>
+      <str name="dir">${solr.ulog.dir:}</str>
+      <int name="numVersionBuckets">${solr.ulog.numVersionBuckets:65536}</int>
+    </updateLog>
+
+    <!-- AutoCommit
+
+         Perform a hard commit automatically under certain conditions.
+         Instead of enabling autoCommit, consider using "commitWithin"
+         when adding documents.
+
+         http://wiki.apache.org/solr/UpdateXmlMessages
+
+         maxDocs - Maximum number of documents to add since the last
+                   commit before automatically triggering a new commit.
+
+         maxTime - Maximum amount of time in ms that is allowed to pass
+                   since a document was added before automatically
+                   triggering a new commit.
+         openSearcher - if false, the commit causes recent index changes
+           to be flushed to stable storage, but does not cause a new
+           searcher to be opened to make those changes visible.
+
+         If the updateLog is enabled, then it's highly recommended to
+         have some sort of hard autoCommit to limit the log size.
+      -->
+    <autoCommit>
+      <maxTime>${solr.autoCommit.maxTime:15000}</maxTime>
+      <openSearcher>false</openSearcher>
+    </autoCommit>
+
+    <!-- softAutoCommit is like autoCommit except it causes a
+         'soft' commit which only ensures that changes are visible
+         but does not ensure that data is synced to disk.  This is
+         faster and more near-realtime friendly than a hard commit.
+      -->
+
+    <autoSoftCommit>
+      <maxTime>${solr.autoSoftCommit.maxTime:-1}</maxTime>
+    </autoSoftCommit>
+
+    <!-- Update Related Event Listeners
+
+         Various IndexWriter related events can trigger Listeners to
+         take actions.
+
+         postCommit - fired after every commit or optimize command
+         postOptimize - fired after every optimize command
+      -->
+
+  </updateHandler>
+
+  <requestHandler name="/select" class="solr.SearchHandler">
+     <lst name="defaults">
+       <str name="echoParams">explicit</str>
+       <int name="rows">10</int>
+       <str name="df">SearchableText</str>
+       <str name="wt">xml</str>
+    </lst>
+    </requestHandler>
+
+  <requestHandler name="/update" class="solr.UpdateRequestHandler" />
+
+  <!-- Solr Cell Update Request Handler
+
+       http://wiki.apache.org/solr/ExtractingRequestHandler
+
+    -->
+  <requestHandler name="/update/extract"
+                  startup="lazy"
+                  class="solr.extraction.ExtractingRequestHandler" >
+    <lst name="defaults">
+      <str name="lowernames">true</str>
+      <str name="uprefix">ignored_</str>
+
+      <!-- capture link hrefs but ignore div attributes -->
+      <str name="captureAttr">true</str>
+      <str name="fmap.a">links</str>
+      <str name="fmap.div">ignored_</str>
+    </lst>
+  </requestHandler>
+
+  <requestHandler name="/admin/ping" class="solr.PingRequestHandler">
+    <lst name="invariants">
+      <str name="q">solrpingquery</str>
+    </lst>
+    <lst name="defaults">
+      <str name="echoParams">all</str>
+    </lst>
+  </requestHandler>
+
+  <updateProcessor class="solr.UUIDUpdateProcessorFactory" name="uuid"/>
+  <updateProcessor class="solr.RemoveBlankFieldUpdateProcessorFactory" name="remove-blank"/>
+  <updateProcessor class="solr.FieldNameMutatingUpdateProcessorFactory" name="field-name-mutating"> 
+    <str name="pattern">[^\w-\.]</str>
+    <str name="replacement">_</str>
+  </updateProcessor>
+  <updateProcessor class="solr.ParseBooleanFieldUpdateProcessorFactory" name="parse-boolean"/> 
+  <updateProcessor class="solr.ParseLongFieldUpdateProcessorFactory" name="parse-long"/>
+  <updateProcessor class="solr.ParseDoubleFieldUpdateProcessorFactory" name="parse-double"/>
+  <updateProcessor class="solr.ParseDateFieldUpdateProcessorFactory" name="parse-date">
+    <arr name="format">
+      <str>yyyy-MM-dd['T'[HH:mm[:ss[.SSS]]]z</str>
+      <str>yyyy-MM-dd['T'[HH:mm[:ss[,SSS]]]z</str>
+      <str>yyyy-MM-dd HH:mm[:ss[.SSS]]]z</str>
+      <str>yyyy-MM-dd HH:mm[:ss[,SSS]]]z</str>
+      <str>[EEE, ]dd MMM yyyy HH:mm[:ss] z</str>
+      <str>EEEE, dd-MMM-yy HH:mm:ss z</str>
+      <str>EEE MMM ppd HH:mm:ss [z ]yyyy</str>
+    </arr>
+  </updateProcessor>
+  <updateProcessor class="solr.AddSchemaFieldsUpdateProcessorFactory" name="add-schema-fields"> 
+    <lst name="typeMapping">
+      <str name="valueClass">java.lang.String</str> 
+      <str name="fieldType">text_general</str>
+      <lst name="copyField"> 
+        <str name="dest">*_str</str>
+        <int name="maxChars">256</int>
+      </lst>
+      <!-- Use as default mapping instead of defaultFieldType -->
+      <bool name="default">true</bool>
+    </lst>
+    <lst name="typeMapping">
+      <str name="valueClass">java.lang.Boolean</str>
+      <str name="fieldType">booleans</str>
+    </lst>
+    <lst name="typeMapping">
+      <str name="valueClass">java.util.Date</str>
+      <str name="fieldType">pdates</str>
+    </lst>
+    <lst name="typeMapping">
+      <str name="valueClass">java.lang.Long</str> 
+      <str name="valueClass">java.lang.Integer</str>
+      <str name="fieldType">plongs</str>
+    </lst>
+    <lst name="typeMapping">
+      <str name="valueClass">java.lang.Number</str>
+      <str name="fieldType">pdoubles</str>
+    </lst>
+  </updateProcessor>
+
+  <!-- The update.autoCreateFields property can be turned to false to disable schemaless mode -->
+  <updateRequestProcessorChain name="add-unknown-fields-to-the-schema" default="${update.autoCreateFields:true}"
+           processor="uuid,remove-blank,field-name-mutating,parse-boolean,parse-long,parse-double,parse-date,add-schema-fields"> 
+    <processor class="solr.LogUpdateProcessorFactory"/>
+    <processor class="solr.DistributedUpdateProcessorFactory"/>
+    <processor class="solr.RunUpdateProcessorFactory"/>
+  </updateRequestProcessorChain>
+
+</config>
