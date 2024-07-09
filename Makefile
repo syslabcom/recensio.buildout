@@ -15,9 +15,6 @@ py3/bin/pip3:
 .installed.cfg: py3/bin/buildout $(wildcard *.cfg config/*.cfg profiles/*.cfg)
 	./py3/bin/buildout
 
-src/ploneintranet/.pre-commit-config.yaml: py3/bin/buildout templates/.pre-commit-config.yaml
-	./py3/bin/buildout install pre_commit
-
 .PHONY: upgrade
 upgrade:
 	./bin/upgrade plone_upgrade -A &&  ./bin/upgrade install -Ap
