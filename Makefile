@@ -1,19 +1,18 @@
 .PHONY: all
 all: .installed.cfg
 
-py3/bin/buildout: py3/bin/pip3 requirements.txt $(wildcard config/*.txt)
+.venv/bin/buildout: .venv/bin/pip3 requirements.txt $(wildcard config/*.txt)
 	# To really be sure we have the desired setuptools we need to uninstall it first
-	./py3/bin/pip3 uninstall -y setuptools
+	./.venv/bin/pip3 uninstall -y setuptools
 	# ... and reinstall it later
-	./py3/bin/pip3 install -IUr config/requirements-venv.txt -c config/constraints.txt
-	./py3/bin/pip3 install -IUr requirements.txt
-	./py3/bin/pip list | grep "plone.recipe.zope2instance.*6.12.2$$" && ./py3/bin/pip3 install plone.recipe.zope2instance==6.13.0
+	./.venv/bin/pip3 install -IUr config/requirements-venv.txt -c config/constraints.txt
+	./.venv/bin/pip3 install -IUr requirements.txt
 
-py3/bin/pip3:
-	python3 -m venv py3
+.venv/bin/pip3:
+	python3.11 -m venv .venv
 
-.installed.cfg: py3/bin/buildout $(wildcard *.cfg config/*.cfg profiles/*.cfg)
-	./py3/bin/buildout
+.installed.cfg: .venv/bin/buildout $(wildcard *.cfg config/*.cfg profiles/*.cfg)
+	./.venv/bin/buildout
 
 .PHONY: upgrade
 upgrade:
@@ -21,7 +20,7 @@ upgrade:
 
 .PHONY: clean
 clean:
-	rm -rf ./py3
+	rm -rf ./.venv
 
 .PHONY: read_registry
 read_registry: .installed.cfg
