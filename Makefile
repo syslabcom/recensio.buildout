@@ -7,7 +7,6 @@ all: .installed.cfg
 	# ... and reinstall it later
 	./.venv/bin/pip3 install -IUr config/requirements-venv.txt -c config/constraints.txt
 	./.venv/bin/pip3 install -IUr requirements.txt
-	./.venv/bin/pip list | grep "plone.recipe.zope2instance.*6.12.2$$" && ./.venv/bin/pip3 install plone.recipe.zope2instance==6.13.0
 
 .venv/bin/pip3:
 	python3.11 -m venv .venv
