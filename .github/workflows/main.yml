@@ -33,3 +33,6 @@ jobs:
           echo "[buildout]" > custom.cfg
           ln -s profiles/development.cfg buildout.cfg
           make
+      - name: Test
+        run: |
+          PYTHONWARNINGS=default,ignore::DeprecationWarning ./bin/test -s recensio.plone
