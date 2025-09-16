@@ -35,6 +35,6 @@ jobs:
           make
       - name: Test
         env:
-          - PYTHONWARNINGS: "default,ignore::DeprecationWarning"
+          PYTHONWARNINGS: default,ignore::DeprecationWarning
         run: |
           ./bin/test -s recensio.plone
