@@ -34,5 +34,7 @@ jobs:
           ln -s profiles/development.cfg buildout.cfg
           make
       - name: Test
+        env:
+          PYTHONWARNINGS: default,ignore::DeprecationWarning
         run: |
-          PYTHONWARNINGS=default,ignore::DeprecationWarning ./bin/test -s recensio.plone
+          ./bin/test -s recensio.plone
