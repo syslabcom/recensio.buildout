@@ -20,7 +20,7 @@ upgrade:
 
 .PHONY: clean
 clean:
-	rm -rf ./.venv
+	rm -rf ./.venv .installed.cfg
 
 .PHONY: read_registry
 read_registry: .installed.cfg
