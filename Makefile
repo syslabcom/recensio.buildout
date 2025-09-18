@@ -2,7 +2,10 @@
 all: .installed.cfg
 
 .venv/bin/buildout: .venv/bin/pip3 requirements.txt $(wildcard config/*.txt)
+	# To really be sure we have the desired setuptools we need to uninstall it first
 	./.venv/bin/pip3 uninstall -y setuptools
+	# ... and reinstall it later
+	./.venv/bin/pip3 install -IUr config/requirements-venv.txt -c config/constraints.txt
 	./.venv/bin/pip3 install -IUr requirements.txt
 
 .venv/bin/pip3:
