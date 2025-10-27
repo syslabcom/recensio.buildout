@@ -41,10 +41,14 @@ graceful: .installed.cfg
 solr-9.9.0.tgz:
 	curl -o solr-9.9.0.tgz https://dlcdn.apache.org/solr/solr/9.9.0/solr-9.9.0.tgz
 
-solr-9.9.0/server/solr/plone/conf/schema.xml: solr-9.9.0.tgz
-	tar xvzf solr-9.9.0.tgz
-	mkdir -p solr-9.9.0/server/solr/plone
-	cp -r etc/solr/* solr-9.9.0/server/solr/plone/
+solr/server/solr/solr.xml: solr-9.9.0.tgz
+	mkdir -p solr
+	tar xvzf solr-9.9.0.tgz -C solr --strip-components=1
+
+solr/server/solr/plone/conf/schema.xml: solr/server/solr/solr.xml
+	mkdir -p solr/server/solr/plone
+	cd solr/server/solr/plone && ln -s ../../../../etc/solr/core.properties
+	cd solr/server/solr/plone && ln -s ../../../../etc/solr/conf
 
 .PHONY: solr
-solr: solr-9.9.0/server/solr/plone/conf/schema.xml
+solr: solr/server/solr/plone/conf/schema.xml
