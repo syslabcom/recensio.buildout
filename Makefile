@@ -38,12 +38,12 @@ graceful: .installed.cfg
 	)
 
 
-solr-9.9.0.tgz:
-	curl -o solr-9.9.0.tgz https://dlcdn.apache.org/solr/solr/9.9.0/solr-9.9.0.tgz
+solr-9.10.1.tgz:
+	wget -O solr-9.10.1.tgz https://www.apache.org/dyn/closer.lua/solr/solr/9.10.1/solr-9.10.1.tgz?action=download
 
-solr/server/solr/solr.xml: solr-9.9.0.tgz
+solr/server/solr/solr.xml: solr-9.10.1.tgz
 	mkdir -p solr
-	tar xvzf solr-9.9.0.tgz -C solr --strip-components=1
+	tar xvzf solr-9.10.1.tgz -C solr --strip-components=1
 
 solr/server/solr/plone/conf/schema.xml: solr/server/solr/solr.xml
 	mkdir -p solr/server/solr/plone

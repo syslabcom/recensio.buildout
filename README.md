@@ -14,7 +14,7 @@ make
 
 Note that the buildout configured ./bin/solr is to be used only for unit/integration tests.
 
-There's a separate Solr installation in ./solr-9.9.9.0/bin/solr that is set up
+There's a separate Solr installation in ./solr-9.10.1/bin/solr that is set up
 via the Makefile, not via buildout. You run the development solr with supervisor.
 
 Note that for this to work properly it needs specific flags in the environment::

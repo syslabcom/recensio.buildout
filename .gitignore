@@ -12,3 +12,5 @@
 /solr/
 /src/
 /var/
+# Ignore the solr download
+*.tgz
