@@ -1,5 +1,5 @@
 .PHONY: all
-all: .installed.cfg
+all: .installed.cfg solr
 
 .venv/bin/buildout: .venv/bin/pip3 requirements.txt $(wildcard config/*.txt)
 	# To really be sure we have the desired setuptools we need to uninstall it first
@@ -36,3 +36,19 @@ graceful: .installed.cfg
 			sleep 30; \
 		done \
 	)
+
+
+solr-9.10.1.tgz:
+	wget -O solr-9.10.1.tgz https://www.apache.org/dyn/closer.lua/solr/solr/9.10.1/solr-9.10.1.tgz?action=download
+
+solr/server/solr/solr.xml: solr-9.10.1.tgz
+	mkdir -p solr
+	tar xvzf solr-9.10.1.tgz -C solr --strip-components=1
+
+solr/server/solr/plone/conf/schema.xml: solr/server/solr/solr.xml
+	mkdir -p solr/server/solr/plone
+	cd solr/server/solr/plone && ln -s ../../../../etc/solr/core.properties
+	cd solr/server/solr/plone && ln -s ../../../../etc/solr/conf
+
+.PHONY: solr
+solr: solr/server/solr/plone/conf/schema.xml

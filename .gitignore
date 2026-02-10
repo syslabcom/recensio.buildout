@@ -9,5 +9,8 @@
 /etc/
 /parts/
 /secret.cfg
+/solr/
 /src/
 /var/
+# Ignore the solr download
+*.tgz

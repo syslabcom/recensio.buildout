@@ -10,6 +10,24 @@ make
 ./bin/instance fg
 ```
 
+## Solr
+
+Note that the buildout configured ./bin/solr is to be used only for unit/integration tests.
+
+There's a separate Solr installation in ./solr-9.10.1/bin/solr that is set up
+via the Makefile, not via buildout. You run the development solr with supervisor.
+
+Note that for this to work properly it needs specific flags in the environment::
+
+    SOLR_ENABLE_REMOTE_STREAMING=true SOLR_ENABLE_STREAM_BODY=true SOLR_OPTS="-Dsolr.allowPaths=${instance:blob-storage}"
+
+These flags are provided via the supervisord config in buildout; the supervisor
+entry in turn depends on the non-buildout Solr install. Yes it's convoluted.
+
+- buildout provides the test solr
+- buildout provides supervisor which has a configuration for the development solr
+- the development solr is provisioned by the Makefile, without buildout
+
 ## Scripts
 
 There is a scripts folder in the package that contains some useful
