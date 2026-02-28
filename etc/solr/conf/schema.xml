@@ -227,11 +227,14 @@
            <!-- termVectors="false" termPositions="false" -->
            <!-- termOffsets="false" -->
            <!--            /> -->
-                   <field name="author_name" type="string" indexed="false"
+
+       <!-- 20260228 - Not indexed in solr, not used in code, believed to be obsolete -->
+           <!-- <field name="author_name" type="string" indexed="false"
            stored="true" required="false" multiValued="false"
            termVectors="false" termPositions="false"
            termOffsets="false"
-                      />
+                      /> -->
+       <!-- 20260228 - authors indexed but not stored - Confirmed searchable -->
                   <field name="authors" type="string" indexed="true"
            stored="false" required="false" multiValued="true"
            termVectors="false" termPositions="false"
@@ -247,21 +250,23 @@
            termVectors="false" termPositions="false"
            termOffsets="false"
                       />
-                  <field name="cmf_uid" type="integer" indexed="true"
+       <!-- 20260228 - Not indexed in solr, not used in code, believed to be obsolete -->
+              <!-- <field name="cmf_uid" type="integer" indexed="true"
            stored="true" required="false" multiValued="false"
            termVectors="false" termPositions="false"
            termOffsets="false"
-                      />
-                  <field name="commentators" type="string" indexed="true"
+                      /> -->
+              <!-- 20260228 - Not indexed in solr, not used in code, believed to be obsolete -->
+              <!-- <field name="commentators" type="string" indexed="true"
            stored="true" required="false" multiValued="true"
            termVectors="false" termPositions="false"
            termOffsets="false"
-                      />
-           <!--        <field name="created" type="date" indexed="true" -->
-           <!-- stored="true" required="false" multiValued="false" -->
-           <!-- termVectors="false" termPositions="false" -->
-           <!-- termOffsets="false" -->
-           <!--            /> -->
+                      /> -->
+              <!--        <field name="created" type="date" indexed="true" -->
+              <!-- stored="true" required="false" multiValued="false" -->
+              <!-- termVectors="false" termPositions="false" -->
+              <!-- termOffsets="false" -->
+              <!--            /> -->
                   <field name="ddcPlace" type="string" indexed="true"
            stored="false" required="false" multiValued="true"
            termVectors="false" termPositions="false"
@@ -277,11 +282,11 @@
            termVectors="false" termPositions="false"
            termOffsets="false"
                       />
-           <!--        <field name="effective" type="date" indexed="true" -->
-           <!-- stored="true" required="false" multiValued="false" -->
-           <!-- termVectors="false" termPositions="false" -->
-           <!-- termOffsets="false" -->
-           <!--            /> -->
+              <!--        <field name="effective" type="date" indexed="true" -->
+              <!-- stored="true" required="false" multiValued="false" -->
+              <!-- termVectors="false" termPositions="false" -->
+              <!-- termOffsets="false" -->
+              <!--            /> -->
                   <field name="effectiveRange" type="date" indexed="true"
            stored="false" required="false" multiValued="true"
            termVectors="false" termPositions="false"
@@ -292,51 +297,55 @@
            termVectors="false" termPositions="false"
            termOffsets="false"
                       />
-           <!--        <field name="exclude_from_nav" type="boolean" indexed="false" -->
-           <!-- stored="true" required="false" multiValued="false" -->
-           <!-- termVectors="false" termPositions="false" -->
-           <!-- termOffsets="false" -->
-           <!--            /> -->
+              <!--        <field name="exclude_from_nav" type="boolean" indexed="false" -->
+              <!-- stored="true" required="false" multiValued="false" -->
+              <!-- termVectors="false" termPositions="false" -->
+              <!-- termOffsets="false" -->
+              <!--            /> -->
                   <field name="exhibitor" type="string" indexed="false"
            stored="true" required="false" multiValued="false"
            termVectors="false" termPositions="false"
            termOffsets="false"
                       />
-           <!--        <field name="expires" type="date" indexed="true" -->
-           <!-- stored="true" required="false" multiValued="false" -->
-           <!-- termVectors="false" termPositions="false" -->
-           <!-- termOffsets="false" -->
-           <!--            /> -->
-                  <field name="getAuthors" type="string" indexed="false"
+              <!--        <field name="expires" type="date" indexed="true" -->
+              <!-- stored="true" required="false" multiValued="false" -->
+              <!-- termVectors="false" termPositions="false" -->
+              <!-- termOffsets="false" -->
+              <!--            /> -->
+              <!-- 20260228 - Not indexed in solr, not used in code, believed to be obsolete -->
+              <!-- <field name="getAuthors" type="string" indexed="false"
            stored="true" required="false" multiValued="true"
            termVectors="false" termPositions="false"
            termOffsets="false"
-                      />
-           <!--        <field name="getIcon" type="string" indexed="false" -->
-           <!-- stored="true" required="false" multiValued="false" -->
-           <!-- termVectors="false" termPositions="false" -->
-           <!-- termOffsets="false" -->
-           <!--            /> -->
-           <!--        <field name="getId" type="string" indexed="true" -->
-           <!-- stored="true" required="false" multiValued="false" -->
-           <!-- termVectors="false" termPositions="false" -->
-           <!-- termOffsets="false" -->
-           <!--            /> -->
-                  <field name="get_issue_title" type="string" indexed="false"
+                      /> -->
+              <!--        <field name="getIcon" type="string" indexed="false" -->
+              <!-- stored="true" required="false" multiValued="false" -->
+              <!-- termVectors="false" termPositions="false" -->
+              <!-- termOffsets="false" -->
+              <!--            /> -->
+              <!--        <field name="getId" type="string" indexed="true" -->
+              <!-- stored="true" required="false" multiValued="false" -->
+              <!-- termVectors="false" termPositions="false" -->
+              <!-- termOffsets="false" -->
+              <!--            /> -->
+              <!-- 20260228 - Not indexed in solr, not used in code, believed to be obsolete -->
+              <!-- <field name="get_issue_title" type="string" indexed="false"
            stored="true" required="false" multiValued="false"
            termVectors="false" termPositions="false"
            termOffsets="false"
-                      />
-                  <field name="get_publication_title" type="string" indexed="false"
+                      /> -->
+              <!-- 20260228 - Not indexed in solr, not used in code, obsolete -->
+              <!-- <field name="get_publication_title" type="string" indexed="false"
            stored="true" required="false" multiValued="false"
            termVectors="false" termPositions="false"
            termOffsets="false"
-                      />
-                  <field name="get_volume_title" type="string" indexed="false"
+                      /> -->
+              <!-- 20260228 - Not indexed in solr, not used in code, obsolete -->
+              <!-- <field name="get_volume_title" type="string" indexed="false"
            stored="true" required="false" multiValued="false"
            termVectors="false" termPositions="false"
            termOffsets="false"
-                      />
+                      /> -->
                   <field name="getObjPositionInParent" type="integer" indexed="true"
            stored="true" required="false" multiValued="false"
            termVectors="false" termPositions="false"
@@ -347,81 +356,90 @@
            termVectors="false" termPositions="false"
            termOffsets="false"
                       />
-                  <field name="getOfficialYearOfPublication" type="string" indexed="false"
+              <!-- 20260228 - Not indexed in solr, not used in code, believed to be obsolete -->
+              <!-- <field name="getOfficialYearOfPublication" type="string" indexed="false"
            stored="true" required="false" multiValued="false"
            termVectors="false" termPositions="false"
            termOffsets="false"
-                      />
-                  <field name="getRawRelatedItems" type="string" indexed="true"
+                      /> -->
+              <!-- 20260228 - Not indexed in solr, not used in code, believed to be obsolete -->
+              <!-- <field name="getRawRelatedItems" type="string" indexed="true"
            stored="false" required="false" multiValued="true"
            termVectors="false" termPositions="false"
            termOffsets="false"
-                      />
-           <!--        <field name="getRemoteUrl" type="string" indexed="false" -->
-           <!-- stored="true" required="false" multiValued="false" -->
-           <!-- termVectors="false" termPositions="false" -->
-           <!-- termOffsets="false" -->
-           <!--            /> -->
-                  <field name="getReviewAuthor" type="string" indexed="false"
+                      /> -->
+              <!--        <field name="getRemoteUrl" type="string" indexed="false" -->
+              <!-- stored="true" required="false" multiValued="false" -->
+              <!-- termVectors="false" termPositions="false" -->
+              <!-- termOffsets="false" -->
+              <!--            /> -->
+              <!-- 20260228 - Not indexed in solr, not used in code, believed to be obsolete -->
+              <!-- <field name="getReviewAuthor" type="string" indexed="false"
            stored="true" required="false" multiValued="false"
            termVectors="false" termPositions="false"
            termOffsets="false"
-                      />
-                  <field name="getReviewAuthorFirstname" type="string" indexed="false"
+                      /> -->
+              <!-- 20260228 - Not indexed in solr, not used in code, believed to be obsolete -->
+              <!-- <field name="getReviewAuthorFirstname" type="string" indexed="false"
            stored="true" required="false" multiValued="false"
            termVectors="false" termPositions="false"
            termOffsets="false"
-                      />
-                  <field name="getReviewAuthorLastname" type="string" indexed="false"
+                      /> -->
+              <!-- 20260228 - Not indexed in solr, not used in code, believed to be obsolete -->
+              <!-- <field name="getReviewAuthorLastname" type="string" indexed="false"
            stored="true" required="false" multiValued="false"
            termVectors="false" termPositions="false"
            termOffsets="false"
-                      />
-                  <field name="getYearOfPublication" type="string" indexed="false"
+                      /> -->
+              <!-- 20260228 - Not indexed in solr, not used in code, believed to be obsolete -->
+              <!-- <field name="getYearOfPublication" type="string" indexed="false"
            stored="true" required="false" multiValued="false"
            termVectors="false" termPositions="false"
            termOffsets="false"
-                      />
+                      /> -->
                   <field name="gndId" type="string" indexed="true"
            stored="true" required="false" multiValued="false"
            termVectors="false" termPositions="false"
            termOffsets="false"
                       />
-                  <field name="herausgeberSammelband" type="string" indexed="false"
+              <!-- 20260228 - Not indexed in solr, not used in code, believed to be obsolete -->
+              <!-- <field name="herausgeberSammelband" type="string" indexed="false"
            stored="false" required="false" multiValued="false"
            termVectors="false" termPositions="false"
            termOffsets="false"
-                      />
+                      /> -->
                   <field name="hide_from_listing" type="boolean" indexed="true"
            stored="true" required="false" multiValued="false"
            termVectors="false" termPositions="false"
            termOffsets="false"
                       />
-           <!--        <field name="id" type="string" indexed="true" -->
-           <!-- stored="true" required="false" multiValued="false" -->
-           <!-- termVectors="false" termPositions="false" -->
-           <!-- termOffsets="false" -->
-           <!--            /> -->
-                  <field name="in_reply_to" type="string" indexed="true"
+              <!--        <field name="id" type="string" indexed="true" -->
+              <!-- stored="true" required="false" multiValued="false" -->
+              <!-- termVectors="false" termPositions="false" -->
+              <!-- termOffsets="false" -->
+              <!--            /> -->
+              <!-- 20260228 - Not indexed in solr, not used in code, believed to be obsolete -->
+              <!-- <field name="in_reply_to" type="string" indexed="true"
            stored="false" required="false" multiValued="false"
            termVectors="false" termPositions="false"
            termOffsets="false"
-                      />
-                  <field name="in_response_to" type="string" indexed="false"
+                      /> -->
+              <!-- 20260228 - Not indexed in solr, not used in code, believed to be obsolete -->
+              <!-- <field name="in_response_to" type="string" indexed="false"
            stored="true" required="false" multiValued="false"
            termVectors="false" termPositions="false"
            termOffsets="false"
-                      />
+                      /> -->
                   <field name="is_default_page" type="boolean" indexed="true"
            stored="false" required="false" multiValued="false"
            termVectors="false" termPositions="false"
            termOffsets="false"
                       />
-           <!--        <field name="is_folderish" type="boolean" indexed="true" -->
-           <!-- stored="true" required="false" multiValued="false" -->
-           <!-- termVectors="false" termPositions="false" -->
-           <!-- termOffsets="false" -->
-           <!--            /> -->
+              <!--        <field name="is_folderish" type="boolean" indexed="true" -->
+              <!-- stored="true" required="false" multiValued="false" -->
+              <!-- termVectors="false" termPositions="false" -->
+              <!-- termOffsets="false" -->
+              <!--            /> -->
                   <field name="isbn" type="string" indexed="true"
            stored="true" required="false" multiValued="true"
            termVectors="false" termPositions="false"
@@ -442,11 +460,12 @@
            termVectors="false" termPositions="false"
            termOffsets="false"
                       />
-                  <field name="listCreators" type="string" indexed="false"
+              <!-- 20260228 - Not indexed in solr, not used in code, believed to be obsolete -->
+              <!-- <field name="listCreators" type="string" indexed="false"
            stored="true" required="false" multiValued="false"
            termVectors="false" termPositions="false"
            termOffsets="false"
-                      />
+                      /> -->
                   <field name="listAuthors" type="string" indexed="false"
            stored="true" required="false" multiValued="true"
            termVectors="false" termPositions="false"
@@ -477,41 +496,41 @@
            termVectors="false" termPositions="false"
            termOffsets="false"
                       />
-                  <field name="meta_type" type="string" indexed="true"
+              <!-- <field name="meta_type" type="string" indexed="true"
            stored="true" required="false" multiValued="false"
            termVectors="false" termPositions="false"
            termOffsets="false"
-                      />
-           <!--        <field name="modified" type="date" indexed="true" -->
-           <!-- stored="true" required="false" multiValued="false" -->
-           <!-- termVectors="false" termPositions="false" -->
-           <!-- termOffsets="false" -->
-           <!--            /> -->
-           <!--        <field name="object_provides" type="string" indexed="true" -->
-           <!-- stored="false" required="false" multiValued="true" -->
-           <!-- termVectors="false" termPositions="false" -->
-           <!-- termOffsets="false" -->
-           <!--            /> -->
+                      /> -->
+              <!--        <field name="modified" type="date" indexed="true" -->
+              <!-- stored="true" required="false" multiValued="false" -->
+              <!-- termVectors="false" termPositions="false" -->
+              <!-- termOffsets="false" -->
+              <!--            /> -->
+              <!--        <field name="object_provides" type="string" indexed="true" -->
+              <!-- stored="false" required="false" multiValued="true" -->
+              <!-- termVectors="false" termPositions="false" -->
+              <!-- termOffsets="false" -->
+              <!--            /> -->
                   <field name="officialYearOfPublication" type="string" indexed="false"
            stored="false" required="false" multiValued="false"
            termVectors="false" termPositions="false"
            termOffsets="false"
                       />
-           <!--        <field name="path_parents" type="string" indexed="true" -->
-           <!-- stored="false" required="false" multiValued="true" -->
-           <!-- termVectors="false" termPositions="false" -->
-           <!-- termOffsets="false" -->
-           <!--            /> -->
-           <!--        <field name="path_depth" type="integer" indexed="true" -->
-           <!-- stored="false" required="false" multiValued="false" -->
-           <!-- termVectors="false" termPositions="false" -->
-           <!-- termOffsets="false" -->
-           <!--            /> -->
-           <!--        <field name="path_string" type="string" indexed="false" -->
-           <!-- stored="true" required="false" multiValued="false" -->
-           <!-- termVectors="false" termPositions="false" -->
-           <!-- termOffsets="false" -->
-           <!--            /> -->
+              <!--        <field name="path_parents" type="string" indexed="true" -->
+              <!-- stored="false" required="false" multiValued="true" -->
+              <!-- termVectors="false" termPositions="false" -->
+              <!-- termOffsets="false" -->
+              <!--            /> -->
+              <!--        <field name="path_depth" type="integer" indexed="true" -->
+              <!-- stored="false" required="false" multiValued="false" -->
+              <!-- termVectors="false" termPositions="false" -->
+              <!-- termOffsets="false" -->
+              <!--            /> -->
+              <!--        <field name="path_string" type="string" indexed="false" -->
+              <!-- stored="true" required="false" multiValued="false" -->
+              <!-- termVectors="false" termPositions="false" -->
+              <!-- termOffsets="false" -->
+              <!--            /> -->
                   <field name="place" type="string" indexed="true"
            stored="false" required="false" multiValued="true"
            termVectors="false" termPositions="false"
@@ -522,11 +541,11 @@
            termVectors="false" termPositions="false"
            termOffsets="false"
                       />
-           <!--        <field name="portal_type" type="string" indexed="true" -->
-           <!-- stored="true" required="false" multiValued="false" -->
-           <!-- termVectors="false" termPositions="false" -->
-           <!-- termOffsets="false" -->
-           <!--            /> -->
+              <!--        <field name="portal_type" type="string" indexed="true" -->
+              <!-- stored="true" required="false" multiValued="false" -->
+              <!-- termVectors="false" termPositions="false" -->
+              <!-- termOffsets="false" -->
+              <!--            /> -->
                   <field name="publisher" type="text" indexed="true"
            stored="false" required="false" multiValued="true"
            termVectors="false" termPositions="false"
@@ -547,21 +566,21 @@
            termVectors="false" termPositions="false"
            termOffsets="false"
                       />
-           <!--        <field name="review_state" type="string" indexed="true" -->
-           <!-- stored="true" required="false" multiValued="false" -->
-           <!-- termVectors="false" termPositions="false" -->
-           <!-- termOffsets="false" -->
-           <!--            /> -->
+              <!--        <field name="review_state" type="string" indexed="true" -->
+              <!-- stored="true" required="false" multiValued="false" -->
+              <!-- termVectors="false" termPositions="false" -->
+              <!-- termOffsets="false" -->
+              <!--            /> -->
                   <field name="series" type="text" indexed="true"
            stored="false" required="false" multiValued="false"
            termVectors="false" termPositions="false"
            termOffsets="false"
                       />
-           <!--        <field name="sortable_title" type="string" indexed="true" -->
-           <!-- stored="true" required="false" multiValued="false" -->
-           <!-- termVectors="false" termPositions="false" -->
-           <!-- termOffsets="false" -->
-           <!--            /> -->
+              <!--        <field name="sortable_title" type="string" indexed="true" -->
+              <!-- stored="true" required="false" multiValued="false" -->
+              <!-- termVectors="false" termPositions="false" -->
+              <!-- termOffsets="false" -->
+              <!--            /> -->
                   <field name="sortable_year" type="string" indexed="true"
            stored="false" required="false" multiValued="false"
            termVectors="false" termPositions="false"
@@ -587,11 +606,12 @@
            termVectors="false" termPositions="false"
            termOffsets="false"
                       />
-                  <field name="total_comments" type="string" indexed="true"
+              <!-- 20260228 - Not indexed in solr, not used in code, believed to be obsolete -->
+              <!-- <field name="total_comments" type="string" indexed="true"
            stored="true" required="false" multiValued="false"
            termVectors="false" termPositions="false"
            termOffsets="false"
-                      />
+                      /> -->
                   <field name="year" type="string" indexed="true"
            stored="false" required="false" multiValued="true"
            termVectors="false" termPositions="false"
