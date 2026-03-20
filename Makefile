@@ -39,7 +39,7 @@ graceful: .installed.cfg
 
 
 solr-9.9.0.tgz:
-	curl -o solr-9.9.0.tgz https://dlcdn.apache.org/solr/solr/9.9.0/solr-9.9.0.tgz
+	curl -o solr-9.9.0.tgz https://archive.apache.org/dist/solr/solr/9.9.0/solr-9.9.0.tgz
 
 solr/server/solr/solr.xml: solr-9.9.0.tgz
 	mkdir -p solr
