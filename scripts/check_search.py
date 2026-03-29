@@ -22,6 +22,7 @@ OUTPUT_DIR = os.path.join(
 )
 CATALOG_FILE = os.path.join(OUTPUT_DIR, "catalog_items.csv")
 SOLR_FILE = os.path.join(OUTPUT_DIR, "solr_items.csv")
+DIFF_FILE = os.path.join(OUTPUT_DIR, "diff_items.csv")
 
 
 def dump_csv(filepath, rows):
@@ -143,6 +144,19 @@ def compare(catalog_items, solr_items):
         print(f"\nItems only in Solr ({len(only_solr)}):")
         for uid in sorted(only_solr):
             print(format_row(solr_items[uid]))
+
+    # Dump diff to CSV
+    os.makedirs(os.path.dirname(DIFF_FILE), exist_ok=True)
+    with open(DIFF_FILE, "w", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(["source", "id", "path", "title", "portal_type", "UID"])
+        for uid in sorted(only_catalog):
+            r = catalog_items[uid]
+            writer.writerow(["catalog", r["id"], r["path"], r["title"], r["portal_type"], r["UID"]])
+        for uid in sorted(only_solr):
+            r = solr_items[uid]
+            writer.writerow(["solr", r["id"], r["path"], r["title"], r["portal_type"], r["UID"]])
+    print(f"\nDiff dumped to {os.path.abspath(DIFF_FILE)}")
 
 
 def main(app):
