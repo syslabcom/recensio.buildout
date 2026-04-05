@@ -7,6 +7,7 @@ all: .installed.cfg solr
 	# ... and reinstall it later
 	.venv/bin/uv pip install -r config/requirements-venv.txt -c config/constraints.txt
 	.venv/bin/uv pip install -r requirements.txt
+	.venv/bin/uv pip install horse_with_no_namespace
 
 .venv/bin/pip3:
 	python3.11 -m venv .venv
