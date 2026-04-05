@@ -9,5 +9,8 @@
 /etc/
 /parts/
 /secret.cfg
+/solr/
+/solr-9.9.0.tgz
 /src/
 /var/
+.DS_Store

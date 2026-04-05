@@ -1,15 +1,19 @@
 .PHONY: all
-all: .installed.cfg
+all: .installed.cfg solr
 
-.venv/bin/buildout: .venv/bin/pip3 requirements.txt $(wildcard config/*.txt)
+.venv/bin/buildout: .venv/bin/uv requirements.txt $(wildcard config/*.txt)
 	# To really be sure we have the desired setuptools we need to uninstall it first
-	./.venv/bin/pip3 uninstall -y setuptools
+	.venv/bin/uv pip uninstall setuptools
 	# ... and reinstall it later
-	./.venv/bin/pip3 install -IUr config/requirements-venv.txt -c config/constraints.txt
-	./.venv/bin/pip3 install -IUr requirements.txt
+	.venv/bin/uv pip install -r config/requirements-venv.txt -c config/constraints.txt
+	.venv/bin/uv pip install -r requirements.txt
+	.venv/bin/uv pip install horse_with_no_namespace
 
 .venv/bin/pip3:
 	python3.11 -m venv .venv
+
+.venv/bin/uv: .venv/bin/pip3
+	./.venv/bin/pip3 install uv
 
 .installed.cfg: .venv/bin/buildout $(wildcard *.cfg config/*.cfg profiles/*.cfg)
 	./.venv/bin/buildout
@@ -36,3 +40,19 @@ graceful: .installed.cfg
 			sleep 30; \
 		done \
 	)
+
+
+solr-9.9.0.tgz:
+	curl -o solr-9.9.0.tgz https://archive.apache.org/dist/solr/solr/9.9.0/solr-9.9.0.tgz
+
+solr/server/solr/solr.xml: solr-9.9.0.tgz
+	mkdir -p solr
+	tar xvzf solr-9.9.0.tgz -C solr --strip-components=1
+
+solr/server/solr/plone/conf/schema.xml: solr/server/solr/solr.xml
+	mkdir -p solr/server/solr/plone
+	cd solr/server/solr/plone && ln -s ../../../../etc/solr/core.properties
+	cd solr/server/solr/plone && ln -s ../../../../etc/solr/conf
+
+.PHONY: solr
+solr: solr/server/solr/plone/conf/schema.xml
