@@ -20,7 +20,7 @@ all: .installed.cfg solr
 
 .PHONY: upgrade
 upgrade:
-	./bin/upgrade plone_upgrade -A &&  ./bin/upgrade install -Ap
+	./bin/upgrade plone_upgrade -A &&  ./bin/upgrade install -A -p
 
 .PHONY: clean
 clean:
