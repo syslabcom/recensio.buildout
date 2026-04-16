@@ -1,5 +1,5 @@
 .PHONY: all
-all: .installed.cfg solr
+all: .installed.cfg solr/server/solr/plone/conf/schema.xml
 
 .venv/bin/buildout: .venv/bin/uv requirements.txt $(wildcard config/*.txt)
 	# To really be sure we have the desired setuptools we need to uninstall it first
@@ -48,11 +48,13 @@ solr-9.9.0.tgz:
 solr/server/solr/solr.xml: solr-9.9.0.tgz
 	mkdir -p solr
 	tar xvzf solr-9.9.0.tgz -C solr --strip-components=1
+	touch solr/server/solr/solr.xml
 
 solr/server/solr/plone/conf/schema.xml: solr/server/solr/solr.xml
 	mkdir -p solr/server/solr/plone
-	cd solr/server/solr/plone && ln -s ../../../../etc/solr/core.properties
-	cd solr/server/solr/plone && ln -s ../../../../etc/solr/conf
+	cd solr/server/solr/plone && ln -sf ../../../../etc/solr/core.properties
+	cd solr/server/solr/plone && ln -sf ../../../../etc/solr/conf
+	touch solr/server/solr/plone/conf/schema.xml
 
 .PHONY: solr
 solr: solr/server/solr/plone/conf/schema.xml
