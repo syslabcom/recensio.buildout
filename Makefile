@@ -42,11 +42,11 @@ graceful: .installed.cfg
 	)
 
 
-solr-9.10.1.tgz:
+downloads/solr-9.10.1.tgz:
 	mkdir -p downloads/
 	curl -o downloads/solr-9.10.1.tgz https://dlcdn.apache.org/solr/solr/9.10.1/solr-9.10.1.tgz
 
-solr/server/solr/solr.xml: solr-9.10.1.tgz
+solr/server/solr/solr.xml: downloads/solr-9.10.1.tgz
 	mkdir -p solr
 	tar xvzf downloads/solr-9.10.1.tgz -C solr --strip-components=1
 	touch solr/server/solr/solr.xml
