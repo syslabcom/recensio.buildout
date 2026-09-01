@@ -1,0 +1,13 @@
+[tool.uv]
+index-strategy = "unsafe-best-match"
+
+[[tool.uv.index]]
+# Set up you keyring with:
+# $ uv auth login https://pypi.syslab.com
+# or manually maintain ~/.local/share/uv/credentials/credentials.toml
+name = "pypi-syslab"
+url = "https://pypi.syslab.com/simple"
+
+[[tool.uv.index]]
+name = "pypi"
+url = "https://pypi.org/simple"

@@ -1,3 +1,5 @@
+recensio.plone
+recensio.altertum
+recensio.regio
+
 Plone
-plone.recipe.zope2instance
-zope.testrunner
