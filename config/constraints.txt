@@ -2,6 +2,11 @@ recensio.plone==3.0.3
 recensio.altertum==2.1.1
 recensio.regio==2.1.1
 
+# Security fixes, remove for Plone > 6.1.5/6.2.1
+icalendar==7.2.2
+plone.autoform==2.0.5
+plone.restapi==9.15.7
+
 # Recensio
 collective.solr==10.1.1
 collective.z3cform.datagridfield==3.0.5
@@ -99,7 +104,6 @@ h11==0.16.0
 httplib2==0.31.2
 httpx==0.28.1
 i18ndude==6.3.0
-icalendar==6.3.2
 id==1.6.1
 idna==3.11
 imagesize==1.5.0
@@ -196,7 +200,6 @@ plone.app.vocabularies==6.0.4
 plone.app.widgets==5.0.2
 plone.app.workflow==5.0.4
 plone.app.z3cform==4.7.10
-plone.autoform==2.0.4
 plone.autoinclude==2.0.5
 plone.base==3.1.2
 plone.batching==2.0.7
@@ -236,7 +239,6 @@ plone.reload==4.0.0
 plone.resource==3.0.3
 plone.resourceeditor==4.0.2
 plone.rest==5.1.0
-plone.restapi==9.15.6
 plone.rfc822==3.0.2
 plone.scale==4.3.1
 plone.schema==2.0.3
