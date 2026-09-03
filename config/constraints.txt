@@ -11,6 +11,7 @@ plone.app.blocks==8.0.1
 # Recensio
 collective.solr==10.1.1
 collective.z3cform.datagridfield==4.0.2
+eea.facetednavigation==16.4
 guess-language==1.0.1+slc0
 pypdf==3.17.4
 reportlab==3.6.12

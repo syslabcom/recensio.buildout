@@ -3,3 +3,5 @@ recensio.altertum
 recensio.regio
 
 Plone
+# We (still?) use
+eea.facetednavigation
