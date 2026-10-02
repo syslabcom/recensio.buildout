@@ -322,7 +322,7 @@ repoze.xmliter==2.0
 requests==2.33.1
 requests-toolbelt==1.0.0
 responses==0.26.0
-RestrictedPython==8.3
+RestrictedPython==8.4
 rfc3986==2.0.0
 rich==15.0.0
 robotframework==7.3.2
