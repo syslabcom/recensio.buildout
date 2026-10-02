@@ -1,4 +1,4 @@
-recensio.plone==3.0.3
+recensio.plone==4.0.0
 recensio.altertum==2.1.1
 recensio.regio==2.1.1
 
