@@ -42,7 +42,7 @@ AccessControl==7.3
 accessible-pygments==0.0.5
 Acquisition==6.2
 alabaster==1.0.0
-anyio==4.13.0
+anyio==4.14.2
 argcomplete==3.6.3
 argh==0.31.3
 async-generator==1.10
