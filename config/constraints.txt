@@ -2,6 +2,14 @@ recensio.plone==4.0.0
 recensio.altertum==2.1.1
 recensio.regio==2.1.1
 
+
+# Security fixes. Remove for Plone > 6.2.2
+certifi==2026.10.19
+Pillow==13.0.0
+pip==26.2.2
+sigstore==4.5.1
+uv==0.13.4
+
 # Security fixes, remove for Plone > 6.1.5/6.2.1
 icalendar==7.2.2
 plone.autoform==3.0.1
@@ -58,7 +66,6 @@ BTrees==6.3
 build==1.5.0
 CacheControl==0.14.4
 cached-property==2.0.1
-certifi==2026.4.22
 cffi==2.0.0
 Chameleon==4.6.0
 charset-normalizer==3.4.7
@@ -156,8 +163,6 @@ pep517==0.13.1
 Persistence==5.4
 persistent==6.5
 piexif==1.1.3
-Pillow==12.2.0
-pip==26.1.2
 Plone==6.2.1
 plone.alterego==3.0.0
 plone.api==3.0.2
