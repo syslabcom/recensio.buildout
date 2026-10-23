@@ -203,7 +203,7 @@ restrictedpython==8.5
 rich==15.0.0
 roman==5.2
 rpds-py==2026.6.3
-setuptools==81.0.0
+setuptools==84.1.0
 sgmllib3k==1.0.0
 simplejson==4.1.2
 six==1.17.0
