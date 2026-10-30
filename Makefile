@@ -57,8 +57,13 @@ $(SOLR_ARCHIVE):
 # Keep this version in sync with config/solr.cfg (the buildout test instance).
 $(SOLR_INSTALLED): $(SOLR_ARCHIVE)
 	@set -eu; \
+	if test -d solr && pgrep -f -- "-Dsolr\.install\.dir=$$(cd solr && pwd -P)( |$$)" >/dev/null; then \
+		echo "Solr is running from $$(cd solr && pwd -P). Stop it first: bin/supervisorctl stop solr" >&2; \
+		exit 1; \
+	fi; \
 	stage=$$(mktemp -d .solr-install.XXXXXX); \
 	trap 'rm -rf "$$stage"' EXIT HUP INT TERM; \
+	chmod 755 "$$stage"; \
 	tar xzf $(SOLR_ARCHIVE) -C "$$stage" --strip-components=1; \
 	test -f "$$stage/server/solr/solr.xml"; \
 	test -f "$$stage/server/solr-webapp/webapp/WEB-INF/lib/solr-core-$(SOLR_VERSION).jar"; \
@@ -75,7 +80,7 @@ $(SOLR_INSTALLED): $(SOLR_ARCHIVE)
 	touch "$$stage/.installed-$(SOLR_VERSION)"; \
 	backup=; \
 	if test -e solr; then \
-		backup=$$(mktemp -d "solr.backup.$(date +%Y%m%d-%H%M%S).XXXXXX"); \
+		backup=$$(mktemp -d "solr.backup.$$(date +%Y%m%d-%H%M%S).XXXXXX"); \
 		rmdir "$$backup"; \
 		mv solr "$$backup"; \
 	fi; \
