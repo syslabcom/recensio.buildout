@@ -51,24 +51,36 @@ $(SOLR_ARCHIVE):
 	curl --fail --location --output $@.tmp https://dlcdn.apache.org/solr/solr/$(SOLR_VERSION)/solr-$(SOLR_VERSION).tgz
 	mv $@.tmp $@
 
-# Stop Solr before upgrading (bin/supervisorctl stop solr), then start it
-# again afterwards. Never unpack a release over an existing installation:
-# versioned JARs from older releases would remain on the classpath. Only
-# entries of server/solr/ and server/solr/configsets/ which the new release
-# does not ship (e.g. the plone core) are carried over.
+# A Solr running under supervisor is stopped for the upgrade and started
+# again afterwards (also when the upgrade fails). A Solr started by other
+# means has to be stopped manually. Never unpack a release over an existing
+# installation: versioned JARs from older releases would remain on the
+# classpath. Only entries of server/solr/ and server/solr/configsets/ which
+# the new release does not ship (e.g. the plone core) are carried over.
 # Keep this version in sync with config/solr.cfg (the buildout test instance).
 $(SOLR_INSTALLED): $(SOLR_ARCHIVE)
 	@set -eu; \
-	if test -d solr && pgrep -f -- "-Dsolr\.install\.dir=$$(cd solr && pwd -P)( |$$)" >/dev/null; then \
-		echo "Solr is running from $$(cd solr && pwd -P). Stop it first: bin/supervisorctl stop solr" >&2; \
-		exit 1; \
-	fi; \
+	solr_running() { \
+		test -d solr && pgrep -f -- "-Dsolr\.install\.dir=$$(cd solr && pwd -P)( |$$)" >/dev/null; \
+	}; \
+	stage=; \
+	restart=; \
+	trap 'rc=$$?; rm -rf "$$stage"; if test -n "$$restart"; then bin/supervisorctl start solr || rc=1; fi; exit $$rc' EXIT; \
+	trap 'exit 1' HUP INT TERM; \
 	stage=$$(mktemp -d .solr-install.XXXXXX); \
-	trap 'rm -rf "$$stage"' EXIT HUP INT TERM; \
 	chmod 755 "$$stage"; \
 	tar xzf $(SOLR_ARCHIVE) -C "$$stage" --strip-components=1; \
 	test -f "$$stage/server/solr/solr.xml"; \
 	test -f "$$stage/server/solr-webapp/webapp/WEB-INF/lib/solr-core-$(SOLR_VERSION).jar"; \
+	if solr_running; then \
+		if test -x bin/supervisorctl && bin/supervisorctl stop solr; then \
+			restart=1; \
+		fi; \
+		if solr_running; then \
+			echo "Solr is running from $$(cd solr && pwd -P) and could not be stopped via bin/supervisorctl. Stop it manually." >&2; \
+			exit 1; \
+		fi; \
+	fi; \
 	if test -d solr; then \
 		for dir in server/solr server/solr/configsets; do \
 			for entry in solr/$$dir/* solr/$$dir/.[!.]* solr/$$dir/..?*; do \
