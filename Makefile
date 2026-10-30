@@ -42,14 +42,51 @@ graceful: .installed.cfg
 	)
 
 
-downloads/solr-9.11.0.tgz:
-	mkdir -p downloads/
-	curl -o downloads/solr-9.11.0.tgz https://dlcdn.apache.org/solr/solr/9.11.0/solr-9.11.0.tgz
+SOLR_VERSION := 9.11.0
+SOLR_ARCHIVE := downloads/solr-$(SOLR_VERSION).tgz
+SOLR_INSTALLED := solr/.installed-$(SOLR_VERSION)
 
-solr/server/solr/solr.xml: downloads/solr-9.11.0.tgz
-	mkdir -p solr
-	tar xvzf downloads/solr-9.11.0.tgz -C solr --strip-components=1
-	touch solr/server/solr/solr.xml
+$(SOLR_ARCHIVE):
+	mkdir -p downloads/
+	curl --fail --location --output $@.tmp https://dlcdn.apache.org/solr/solr/$(SOLR_VERSION)/solr-$(SOLR_VERSION).tgz
+	mv $@.tmp $@
+
+# Stop Solr before upgrading (bin/supervisorctl stop solr), then start it
+# again afterwards. Never unpack a release over an existing installation:
+# versioned JARs from older releases would remain on the classpath.
+# Keep this version in sync with config/solr.cfg (the buildout test instance).
+$(SOLR_INSTALLED): $(SOLR_ARCHIVE)
+	@set -eu; \
+	stage=$$(mktemp -d .solr-install.XXXXXX); \
+	trap 'rm -rf "$$stage"' EXIT HUP INT TERM; \
+	tar xzf $(SOLR_ARCHIVE) -C "$$stage" --strip-components=1; \
+	test -f "$$stage/server/solr/solr.xml"; \
+	test -f "$$stage/server/solr-webapp/webapp/WEB-INF/lib/solr-core-$(SOLR_VERSION).jar"; \
+	if test -d solr; then \
+		for entry in solr/server/solr/* solr/server/solr/.[!.]* solr/server/solr/..?*; do \
+			test -e "$$entry" || test -L "$$entry" || continue; \
+			case "$${entry##*/}" in solr.xml|configsets|README*) continue ;; esac; \
+			cp -a "$$entry" "$$stage/server/solr/"; \
+		done; \
+		if test -d solr/server/solr/configsets; then \
+			cp -a solr/server/solr/configsets/. "$$stage/server/solr/configsets/"; \
+		fi; \
+	fi; \
+	touch "$$stage/.installed-$(SOLR_VERSION)"; \
+	backup=; \
+	if test -e solr; then \
+		backup=$$(mktemp -d "solr.backup.$(date +%Y%m%d-%H%M%S).XXXXXX"); \
+		rmdir "$$backup"; \
+		mv solr "$$backup"; \
+	fi; \
+	if ! mv "$$stage" solr; then \
+		test -z "$$backup" || mv "$$backup" solr; \
+		exit 1; \
+	fi; \
+	test -z "$$backup" || echo "Previous Solr installation preserved in $$backup"
+
+solr/server/solr/solr.xml: $(SOLR_INSTALLED)
+	@test -f $@
 
 solr/server/solr/plone/conf/schema.xml: solr/server/solr/solr.xml
 	mkdir -p solr/server/solr/plone

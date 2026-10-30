@@ -10,6 +10,8 @@
 /parts/
 /secret.cfg
 /solr/
+/solr.backup.*/
+/.solr-install.*/
 /solr-9.9.0.tgz
 /src/
 /var/
