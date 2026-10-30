@@ -53,7 +53,9 @@ $(SOLR_ARCHIVE):
 
 # Stop Solr before upgrading (bin/supervisorctl stop solr), then start it
 # again afterwards. Never unpack a release over an existing installation:
-# versioned JARs from older releases would remain on the classpath.
+# versioned JARs from older releases would remain on the classpath. Only
+# entries of server/solr/ and server/solr/configsets/ which the new release
+# does not ship (e.g. the plone core) are carried over.
 # Keep this version in sync with config/solr.cfg (the buildout test instance).
 $(SOLR_INSTALLED): $(SOLR_ARCHIVE)
 	@set -eu; \
@@ -68,14 +70,14 @@ $(SOLR_INSTALLED): $(SOLR_ARCHIVE)
 	test -f "$$stage/server/solr/solr.xml"; \
 	test -f "$$stage/server/solr-webapp/webapp/WEB-INF/lib/solr-core-$(SOLR_VERSION).jar"; \
 	if test -d solr; then \
-		for entry in solr/server/solr/* solr/server/solr/.[!.]* solr/server/solr/..?*; do \
-			test -e "$$entry" || test -L "$$entry" || continue; \
-			case "$${entry##*/}" in solr.xml|configsets|README*) continue ;; esac; \
-			cp -a "$$entry" "$$stage/server/solr/"; \
+		for dir in server/solr server/solr/configsets; do \
+			for entry in solr/$$dir/* solr/$$dir/.[!.]* solr/$$dir/..?*; do \
+				test -e "$$entry" || test -L "$$entry" || continue; \
+				target="$$stage/$${entry#solr/}"; \
+				if test -e "$$target" || test -L "$$target"; then continue; fi; \
+				cp -a "$$entry" "$$target"; \
+			done; \
 		done; \
-		if test -d solr/server/solr/configsets; then \
-			cp -a solr/server/solr/configsets/. "$$stage/server/solr/configsets/"; \
-		fi; \
 	fi; \
 	touch "$$stage/.installed-$(SOLR_VERSION)"; \
 	backup=; \
