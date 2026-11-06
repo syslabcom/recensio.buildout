@@ -1,3 +1,5 @@
+PLONE_CONSTRAINTS = https://raw.githubusercontent.com/collective/experimental-plone-pins/c17d7813d46a1d9981d715421a46582ad05b8fe4/plone62-py311+/constraints.txt
+
 .PHONY: all
 all: .installed.cfg solr/server/solr/plone/conf/schema.xml
 
@@ -10,7 +12,13 @@ all: .installed.cfg solr/server/solr/plone/conf/schema.xml
 	.venv/bin/uv pip install horse_with_no_namespace
 
 .venv/bin/pip3:
-	python3.11 -m venv .venv
+	@if command -v uv >/dev/null 2>&1; then \
+		uv venv --seed; \
+	elif command -v pipx >/dev/null 2>&1; then \
+		pipx run uv venv --seed; \
+	else \
+		python3.11 -m venv .venv; \
+	fi
 
 .venv/bin/uv: .venv/bin/pip3
 	./.venv/bin/pip3 install uv
@@ -41,6 +49,15 @@ graceful: .installed.cfg
 		done \
 	)
 
+.PHONY: update-pins
+update-pins: .venv/bin/uv  ## Resolve and update Python and buildout pins
+	mkdir -p tmp/update-pins
+	.venv/bin/uv venv tmp/update-pins/.venv --seed --allow-existing;
+	. tmp/update-pins/.venv/bin/activate && uv pip install uv -c "$(PLONE_CONSTRAINTS)"
+	. tmp/update-pins/.venv/bin/activate && uv pip install \
+		-r config/requirements.txt -r "$(PLONE_CONSTRAINTS)"
+	. tmp/update-pins/.venv/bin/activate && uv pip freeze > config/constraints.txt;
+	./.venv/bin/uvx --from plone.releaser manage constraints2versions -p config/constraints.txt
 
 SOLR_VERSION := 9.11.0
 SOLR_ARCHIVE := downloads/solr-$(SOLR_VERSION).tgz
