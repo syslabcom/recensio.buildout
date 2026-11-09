@@ -1,4 +1,4 @@
-PLONE_CONSTRAINTS = https://raw.githubusercontent.com/collective/experimental-plone-pins/c17d7813d46a1d9981d715421a46582ad05b8fe4/plone62-py311+/constraints.txt
+PLONE_CONSTRAINTS = https://raw.githubusercontent.com/collective/experimental-plone-pins/1d6822443a39d432b9a28bee9a5a948e5b175f70/plone62-py311+/constraints.txt
 
 .PHONY: all
 all: .installed.cfg solr/server/solr/plone/conf/schema.xml
