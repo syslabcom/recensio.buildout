@@ -1,4 +1,4 @@
-accesscontrol==7.7
+accesscontrol==7.8
 accessible-pygments==0.0.5
 acquisition==6.2
 alabaster==1.0.0
@@ -108,7 +108,7 @@ gitpython==3.2.1
 grpcio==1.85.0
 grpcio-tools==1.85.0
 guess-language==1.0.1+slc0
-gunicorn==26.2.0
+gunicorn==27.0.0
 h11==0.16.0
 haufe-requestmonitoring==0.6.0
 headerparser==0.5.2
@@ -161,6 +161,7 @@ multimapping==5.1
 multipart==2.0.1
 mxdev==5.4.1
 natsort==8.4.0
+networkx==3.6.1
 nh3==0.3.7
 node==2.2.0
 node-ext-ldap==2.0.2
@@ -178,7 +179,7 @@ packaging==26.3
 pas-plugins-authomatic==2.0.0
 pas-plugins-headers==2.0.0
 pas-plugins-ldap==1.8.4
-pas-plugins-oidc==2.0.0
+pas-plugins-oidc==2.1.0
 passlib==1.7.4
 paste==3.11.0
 pastedeploy==3.1.0
@@ -234,7 +235,7 @@ plone-app-testing==8.0.2
 plone-app-textfield==4.0.2
 plone-app-theming==7.0.1
 plone-app-tiles==5.0.0
-plone-app-upgrade==4.1.1
+plone-app-upgrade==4.1.2
 plone-app-users==4.0.0
 plone-app-uuid==3.0.0
 plone-app-versioningbehavior==3.0.0
@@ -246,7 +247,7 @@ plone-app-z3cform==5.0.2
 plone-autoform==3.0.1
 plone-autoinclude==3.0.0
 plone-base==4.0.2
-plone-batching==3.0.2
+plone-batching==3.0.3
 plone-behavior==3.0.1
 plone-browserlayer==4.0.0
 plone-cachepurging==4.0.0
@@ -287,7 +288,7 @@ plone-reload==5.0.1
 plone-resource==4.0.0
 plone-resourceeditor==5.0.0
 plone-rest==6.0.0
-plone-restapi==10.2.0
+plone-restapi==10.2.1
 plone-rfc822==4.0.0
 plone-scale==5.1.1
 plone-schema==3.0.0
@@ -310,11 +311,11 @@ pluggy==1.7.0
 plumber==3.0.0
 products-btreefolder2==6.0
 products-cmfcore==3.8
-products-cmfdifftool==5.0.0
+products-cmfdifftool==5.0.1
 products-cmfdynamicviewfti==8.0.0
-products-cmfeditions==5.0.0
+products-cmfeditions==5.0.2
 products-cmfplacefulworkflow==4.0.0
-products-cmfplone==6.2.2
+products-cmfplone==6.2.3
 products-cmfuid==5.0
 products-daterecurringindex==4.0.0
 products-dcworkflow==4.0
@@ -325,7 +326,7 @@ products-isurlinportal==4.0.0
 products-mailhost==6.1
 products-membrane==8.0.0
 products-memcachedmanager==1.2.1
-products-mimetypesregistry==4.0.0
+products-mimetypesregistry==4.0.2
 products-pdbdebugmode==3.0.0
 products-plonekeywordmanager==7.0.0
 products-plonepas==9.0.0
@@ -433,6 +434,7 @@ sphinxcontrib-qthelp==2.0.0
 sphinxcontrib-serializinghtml==2.0.0
 sqlalchemy==2.1.8
 stdlib-list==0.12.0
+superlance==2.0.0
 supervisor==4.3.0
 tarjan==0.2.4
 tempstorage==6.0
