@@ -225,7 +225,7 @@ plone-app-lockingbehavior==3.0.0
 plone-app-mosaic==4.2.1
 plone-app-multilingual==9.0.2
 plone-app-portlets==7.0.2
-plone-app-querystring==3.1.1
+plone-app-querystring==3.1.2
 plone-app-redirector==4.0.0
 plone-app-registry==3.0.1
 plone-app-relationfield==5.0.0
@@ -360,7 +360,7 @@ pygithub==2.10.0
 pygments==2.21.0
 pyjwkest==1.4.4
 pyjwt==2.15.1
-pymdown-extensions==13.0
+pymdown-extensions==13.1
 pynacl==1.6.2
 pyopenssl==26.4.0
 pyparsing==3.3.3
@@ -449,7 +449,7 @@ trio==0.35.0
 trio-websocket==0.12.2
 trove-classifiers==2026.9.21.13
 twine==7.0.0
-types-pyyaml==6.0.12.20261103
+types-pyyaml==6.0.12.20261111
 types-toml==0.10.8.20260518
 typing-extensions==4.16.0
 typing-inspection==0.4.5
