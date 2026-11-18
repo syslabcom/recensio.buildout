@@ -97,7 +97,7 @@ fancycompleter==0.11.1
 feedparser==6.0.14
 feedparser-sgmllib==2.1.0
 file-read-backwards==3.2.0
-filelock==4.2.11
+filelock==4.2.12
 five-customerize==4.1
 five-intid==3.1.0
 five-localsitemanager==5.0
@@ -165,7 +165,7 @@ multipart==2.0.1
 mxdev==5.4.1
 natsort==8.4.0
 networkx==3.6.1
-nh3==0.3.7
+nh3==0.3.8
 node==2.2.0
 node-ext-ldap==2.0.2
 node-ext-ugm==2.1.0
@@ -200,7 +200,7 @@ pip==26.3
 pip-api==0.0.35
 pip-audit==2.10.1
 pip-requirements-parser==32.0.1
-platformdirs==4.14.5
+platformdirs==4.14.7
 plone==6.2.3
 plone-alterego==3.0.0
 plone-api==3.0.4
@@ -232,7 +232,7 @@ plone-app-querystring==3.1.2
 plone-app-redirector==4.0.0
 plone-app-registry==3.0.1
 plone-app-relationfield==5.0.0
-plone-app-robotframework==3.0.0
+plone-app-robotframework==3.0.1
 plone-app-standardtiles==4.0.0
 plone-app-testing==8.0.2
 plone-app-textfield==4.0.2
@@ -416,7 +416,7 @@ roman-numerals==4.1.0
 rpds-py==2026.9.1
 secretstorage==3.5.0
 seedir==0.5.1
-selenium==4.52.0
+selenium==4.53.0
 sentry-sdk==2.75.0
 setuptools==84.2.1
 sgmllib3k==1.0.0
@@ -464,7 +464,7 @@ tzdata==2026.6
 unidecode==1.4.0
 urllib3==2.8.0
 urllib3-secure-extra==0.1.0
-uv==0.13.8
+uv==0.13.9
 wadllib==2.1.0
 waitress==3.0.2
 watchdog==7.1.0
