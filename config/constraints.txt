@@ -32,7 +32,7 @@ charset-normalizer==3.5.2
 check-manifest==0.51
 click==8.5.1
 click-default-group==1.2.4
-cloudpickle==3.1.2
+cloudpickle==3.1.3
 cmarkgfm==2025.10.22
 collective-auditlog==4.0.0
 collective-collabora==2.0.0
@@ -62,7 +62,7 @@ collective-relationhelpers==1.6
 collective-revisionmanager==1.2.3
 collective-sentry==2.0.1
 collective-solr==10.1.1
-collective-taxonomy==4.1.0
+collective-taxonomy==4.1.1
 collective-vdexvocabulary==0.3
 collective-workspace==5.0.0
 collective-z3cform-datagridfield==4.0.3
@@ -179,7 +179,7 @@ outcome==1.3.0.post0
 overrides==7.7.0
 packageurl-python==0.17.6
 packaging==26.3
-pas-plugins-authomatic==2.0.0
+pas-plugins-authomatic==3.0.0
 pas-plugins-headers==2.0.0
 pas-plugins-ldap==1.8.4
 pas-plugins-oidc==2.1.0
@@ -310,7 +310,7 @@ plone-versioncheck==2.0.2
 plone-volto==6.1.0
 plone-z3cform==3.0.0
 plonetheme-barceloneta==4.1.2
-plonex==0.0.1a0
+plonex==0.0.1a1
 pluggy==1.7.0
 plumber==3.0.0
 products-btreefolder2==6.0
@@ -328,7 +328,7 @@ products-externalmethod==6.1
 products-genericsetup==5.2
 products-isurlinportal==4.0.0
 products-mailhost==6.1
-products-membrane==8.0.0
+products-membrane==9.0.0
 products-memcachedmanager==1.2.1
 products-mimetypesregistry==4.0.2
 products-pdbdebugmode==3.0.0
@@ -428,7 +428,7 @@ smmap==5.0.3
 sniffio==1.3.1
 snowballstemmer==3.1.1
 sortedcontainers==2.4.0
-soupsieve==4.1.1
+soupsieve==4.1.2
 sphinx==9.0.4
 sphinx-basic-ng==1.0.0b2
 sphinxcontrib-applehelp==2.0.0
@@ -498,6 +498,7 @@ z3c-jbot==3.1
 z3c-objpath==3.0
 z3c-pt==5.1
 z3c-relationfield==3.1
+z3c-saconfig==2.1
 z3c-unconfigure==3.0
 z3c-zcmlhook==3.1
 zc-buildout==6.1.0
@@ -544,7 +545,7 @@ zope-error==6.0
 zope-event==6.2
 zope-exceptions==6.0
 zope-filerepresentation==7.0
-zope-globalrequest==3.0
+zope-globalrequest==3.1
 zope-hookable==8.2
 zope-i18n==6.0
 zope-i18nmessageid==8.2
@@ -569,6 +570,7 @@ zope-sequencesort==6.0
 zope-session==6.0
 zope-site==6.0
 zope-size==6.0
+zope-sqlalchemy==4.1
 zope-structuredtext==6.0
 zope-tal==6.0
 zope-tales==7.0
